@@ -1,0 +1,241 @@
+a ⠁
+b ⠃
+c ⠉
+d ⠙
+e ⠑
+f ⠋
+g ⠛
+h ⠓
+i ⠊
+j ⠚
+k ⠅
+l ⠇
+m ⠍
+n ⠝
+o ⠕
+p ⠏
+q ⠟
+r ⠗
+s ⠎
+t ⠞
+u ⠥
+v ⠧
+w ⠺
+x ⠭
+y ⠽
+z ⠵
+about ab
+above abv
+according ac
+across acr
+after af
+afternoon afn
+afterward afw
+again ag
+against ag⠌
+almost alm
+already alr
+also al
+although al⠹
+altogether alt
+always alw
+^ance ⠨e
+and ⠯
+ar ⠜
+_as z
+^bb^ ⠆
+_be ⠆
+be^ ⠆
+because ⠆c
+before ⠆f
+behind ⠆h
+below ⠆l
+beneath ⠆n
+beside ⠆s
+between ⠆t
+beyond ⠆y
+blind bl
+braille brl
+_but b
+_can c
+cannot ⠸c
+^cc^ ⠒
+ch ⠡
+character ⠐⠡
+_child ⠡
+children ⠡n
+con^ ⠒
+conceive ⠒cv
+conceiving ⠒cvg
+could cd
+day ⠐d
+deceive dcv
+deceiving dcvg
+declare dcl
+declaring dclg
+dis^ ⠲
+_do d
+^ea^ ⠂
+ed ⠫
+either ei
+en ⠢
+^ence ⠰e
+_enough ⠢
+er ⠻
+ever ⠐e
+_every e
+father ⠐f
+^ff^ ⠖
+first f⠌
+for ⠿
+friend fr
+_from f
+^ful ⠰l
+^gg^ ⠶
+gh ⠣
+_go g
+good gd
+great grt
+had ⠸h
+_have h
+here ⠐h
+herself h⠻f
+him hm
+himself hmf
+_his ⠦
+immediate imm
+in ⠔
+ing ⠬
+_it x
+_its xs
+itself xf
+^ity ⠰y
+_just j
+know ⠐k
+_knowledge k
+^less ⠨s
+letter lr
+_like l
+little ll
+lord ⠐l
+many ⠸m
+^ment ⠰t
+_more m
+mother ⠐m
+much m⠡
+must m⠌
+myself myf
+name ⠐n
+necessary nec
+neither nei
+^ness ⠰s
+_not n
+of ⠷
+one ⠐o
+oneself ⠐of
+^ong ⠰g
+ou ⠳
+ought ⠐⠳
+^ound ⠨d
+^ount ⠨t
+ourselves ⠳rvs
+_out ⠳
+ow ⠪
+paid pd
+part ⠐p
+_people p
+perceive p⠻cv
+perceiving p⠻cvg
+perhaps p⠻h
+question ⠐q
+quick qk
+_quite q
+_rather r
+receive rcv
+receiving rcvg
+rejoice rjc
+rejoicing rjcg
+right ⠐r
+said sd
+sh ⠩
+_shall ⠩
+should ⠩d
+^sion ⠨n
+_so s
+some ⠐s
+spirit ⠸s
+st ⠌
+_still ⠌
+such s⠡
+th ⠹
+_that t
+the ⠮
+their ⠸⠮
+themselves ⠮mvs
+there ⠐⠮
+these ⠘⠮
+_this ⠹
+those ⠘⠹
+through ⠐⠹
+thyself ⠹yf
+time ⠐t
+^tion ⠰n
+today td
+together tgr
+tomorrow tm
+tonight tn
+under ⠐u
+upon ⠘u
+_us u
+_very v
+_was ⠴
+_were ⠶
+wh ⠱
+where ⠐⠱
+_which ⠱
+whose ⠘⠱
+_will w
+with ⠾
+word ⠘w
+work ⠐w
+world ⠸w
+would wd
+_you y
+young ⠐y
+your yr
+yourself yrf
+yourselves yrvs
+apostrophe ' ⠄
+asterisk * ⠐⠔
+brackets [] ⠨⠣^^⠨⠜
+British pound £ ⠈⠇
+colon : ^^⠒
+comma , ^^⠂
+dash - ⠠⠤
+decimal . ^⠲^
+dollar $ ⠈⠎
+ellipsis ... ⠲⠲⠲
+exclamation ! ^^⠖
+euro € ⠈⠑
+hyphen - ⠤
+number # ⠼^^
+parentheses () ⠐⠣^^⠐⠜
+period . ^^⠲
+question ? ^^⠦
+double quotes "" ⠦^^⠴
+single quotes '' ⠠⠦^^⠠⠴
+semicolon ; ^^⠆
+slash / ⠸⠌
+yen ¥ ⠈⠽
+capital letter ⠠^^
+capital word ⠠⠠^^
+capital passage ⠠⠠⠠^^
+capital, term. ⠠⠄^^
+grade 1 symbol ⠰^^
+grade 1 word ⠰⠰^^
+grade 1 passage ⠰⠰⠰^^
+grade 1, term. ⠰⠄^^
+italic symbol ⠨⠰^^
+italic word ⠨⠂^^
+italic passage ⠨⠶^^
+italic, term. ⠨⠄^^

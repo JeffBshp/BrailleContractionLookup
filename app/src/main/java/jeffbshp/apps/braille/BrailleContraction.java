@@ -2,9 +2,11 @@ package jeffbshp.apps.braille;
 
 import android.graphics.Typeface;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ScaleXSpan;
+import android.text.style.TypefaceSpan;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,15 +46,6 @@ public class BrailleContraction {
                 shortForm.setSpan(new CustomTypefaceSpan("monospace", typeface), spanStart, i + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 shortForm.setSpan(new BackgroundColorSpan(0xFFEEEEEE), spanStart, i + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 spanStart = -1;
-            }
-            if ((c & 0x2807) == 0x2800) {
-                shortForm.insert(i, " ");
-                shortForm.setSpan(new ScaleXSpan(0.1f), i, i + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                i += 2;
-                shortForm.insert(i, " ");
-                shortForm.insert(shortForm.length(), " ");
-                shortForm.setSpan(new ScaleXSpan(-0.1f), i, i + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                shortForm.setSpan(new BackgroundColorSpan(0xFFFEFEFE), i + 1, i + 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
     }

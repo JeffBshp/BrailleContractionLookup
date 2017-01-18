@@ -1,11 +1,17 @@
 package jeffbshp.apps.braille;
 
+import android.content.Intent;
+import android.database.DataSetObserver;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -25,13 +31,12 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final int MAX_CELLS = 4;
+    private static final int NUM_CELLS = 4;
     private static final Pattern digits = Pattern.compile("^ |[^0-9 ]");
     private TextView editText;
     private LinearLayout cellLayout;
     private BrailleCell cells[];
-    private Button buttonMinus;
-    private Button buttonPlus;
+    private Button buttonClear;
     private ListView listResults;
     private List<BrailleContraction> data;
 
@@ -39,13 +44,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(toolbar);
 
-        buttonMinus = (Button) findViewById(R.id.button_minus);
-        buttonMinus.setOnClickListener(this);
-        buttonPlus = (Button) findViewById(R.id.button_plus);
-        buttonPlus.setOnClickListener(this);
+        buttonClear = (Button) findViewById(R.id.button_clear);
+        buttonClear.setOnClickListener(this);
 
-        BrailleContraction.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Swell-Braille.ttf"));
+        BrailleContraction.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/UBraille/UBraille.ttf"));
         loadData();
         final ArrayAdapter<Spannable> adapter = new ArrayAdapter<Spannable>(this, R.layout.search_result, R.id.result_text, new ArrayList<Spannable>());
         listResults = (ListView) findViewById(R.id.list_results);
@@ -59,13 +64,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         listResults.setAdapter(adapter);
         adapter.addAll(search(" "));
 
-        cells = new BrailleCell[MAX_CELLS];
+        cells = new BrailleCell[NUM_CELLS];
         cellLayout = (LinearLayout) findViewById(R.id.cells);
-        for (int i = 0; i < MAX_CELLS; i++) {
+        for (int i = 0; i < NUM_CELLS; i++) {
             cells[i] = new BrailleCell(this);
             cells[i].setOnClickListener(this);
+            cellLayout.addView(cells[i]);
         }
-        cellLayout.addView(cells[0]);
 
         editText = (TextView) findViewById(R.id.edit_text);
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -89,12 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     results = search(string);
                 } else {
                     String states[] = string.split(" ");
-                    while (cellLayout.getChildCount() < states.length) {
-                        addCell();
-                        if (cellLayout.getChildCount() == cells.length) break;
-                    }
                     StringBuilder query = new StringBuilder();
-                    for (int i = 0; i < cellLayout.getChildCount(); i++) {
+                    for (int i = 0; i < NUM_CELLS; i++) {
                         if (i < states.length) cells[i].setState(states[i]);
                         else cells[i].setState("");
                         char unicode = cells[i].getUnicode();
@@ -105,45 +106,60 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 adapter.clear();
                 adapter.addAll(results);
                 adapter.notifyDataSetChanged();
+                listResults.setSelectionAfterHeaderView();
             }
         });
     }
 
-    private void addCell() {
-        int count = cellLayout.getChildCount();
-        if (count < cells.length) {
-            cellLayout.addView(cells[count]);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.actionbar_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_info:
+                Intent intent = new Intent(this, InfoActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
-    private void removeCell() {
-        int count = cellLayout.getChildCount();
-        cells[count - 1].setState("");
-        if (count > 1) {
-            cellLayout.removeViewAt(count - 1);
+    private void clearCells() {
+
+        for (BrailleCell cell : cells) {
+            cell.setState("");
         }
     }
 
     private void updateText() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < cellLayout.getChildCount(); i++) {
+        boolean empty = true;
+        for (int i = NUM_CELLS - 1; i >= 0; i--) {
             String state = cells[i].getState();
-            if (!state.isEmpty()) {
-                sb.append(state);
+            if (!empty) {
+                sb.insert(0, " " + state);
+            } else if (!state.isEmpty()) {
+                sb.insert(0, " " + state);
+                empty = false;
             }
-            sb.append(" ");
         }
-        sb.deleteCharAt(sb.length() - 1);
+        if (sb.length() > 0) {
+            sb.deleteCharAt(0);
+        }
         editText.setText(sb.toString());
     }
 
     @Override
     public void onClick(View v) {
         hideKeyboard(v);
-        if (v.getId() == R.id.button_minus) {
-            removeCell();
-        } else if (v.getId() == R.id.button_plus) {
-            addCell();
+        if (v.getId() == R.id.button_clear) {
+            clearCells();
         }
         updateText();
     }
@@ -170,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
         try {
+            int lineNumber = 0;
             String line = reader.readLine();
             while (line != null) {
                 String split[] = line.split(" ");
@@ -180,11 +197,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         longForm.append(" ").append(split[i]);
                     }
                 }
-                if (longForm.length() == 1 && shortForm.length() == 1) {
+                if (lineNumber <= 25) {
                     BrailleContraction.addCharacter(longForm.charAt(0), shortForm.charAt(0));
                 }
                 data.add(new BrailleContraction(longForm.toString(), shortForm));
                 line = reader.readLine();
+                lineNumber++;
             }
         } catch (IOException e) {
             e.printStackTrace();

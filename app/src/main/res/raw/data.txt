@@ -1,13 +1,13 @@
-a ⠁
-b ⠃
-c ⠉
-d ⠙
-e ⠑
-f ⠋
-g ⠛
-h ⠓
-i ⠊
-j ⠚
+a (1) ⠁
+b (2) ⠃
+c (3) ⠉
+d (4) ⠙
+e (5) ⠑
+f (6) ⠋
+g (7) ⠛
+h (8) ⠓
+i (9) ⠊
+j (0) ⠚
 k ⠅
 l ⠇
 m ⠍
@@ -42,9 +42,9 @@ always alw
 ^ance ⠨e
 and ⠯
 ar ⠜
-_as z
+_as_ z
 ^bb^ ⠆
-_be ⠆
+_be_ ⠆
 be^ ⠆
 because ⠆c
 before ⠆f
@@ -56,13 +56,13 @@ between ⠆t
 beyond ⠆y
 blind bl
 braille brl
-_but b
-_can c
+_but_ b
+_can_ c
 cannot ⠸c
 ^cc^ ⠒
 ch ⠡
 character ⠐⠡
-_child ⠡
+_child_ ⠡
 children ⠡n
 con^ ⠒
 conceive ⠒cv
@@ -74,53 +74,53 @@ deceiving dcvg
 declare dcl
 declaring dclg
 dis^ ⠲
-_do d
+_do_ d
 ^ea^ ⠂
 ed ⠫
 either ei
 en ⠢
 ^ence ⠰e
-_enough ⠢
+_enough_ ⠢
 er ⠻
 ever ⠐e
-_every e
+_every_ e
 father ⠐f
 ^ff^ ⠖
 first f⠌
 for ⠿
 friend fr
-_from f
+_from_ f
 ^ful ⠰l
 ^gg^ ⠶
 gh ⠣
-_go g
+_go_ g
 good gd
 great grt
 had ⠸h
-_have h
+_have_ h
 here ⠐h
 herself h⠻f
 him hm
 himself hmf
-_his ⠦
+_his_ ⠦
 immediate imm
 in ⠔
 ing ⠬
-_it x
-_its xs
+_it_ x
+_its_ xs
 itself xf
 ^ity ⠰y
-_just j
+_just_ j
 know ⠐k
-_knowledge k
+_knowledge_ k
 ^less ⠨s
 letter lr
-_like l
+_like_ l
 little ll
 lord ⠐l
 many ⠸m
 ^ment ⠰t
-_more m
+_more_ m
 mother ⠐m
 much m⠡
 must m⠌
@@ -129,7 +129,7 @@ name ⠐n
 necessary nec
 neither nei
 ^ness ⠰s
-_not n
+_not_ n
 of ⠷
 one ⠐o
 oneself ⠐of
@@ -139,18 +139,18 @@ ought ⠐⠳
 ^ound ⠨d
 ^ount ⠨t
 ourselves ⠳rvs
-_out ⠳
+_out_ ⠳
 ow ⠪
 paid pd
 part ⠐p
-_people p
+_people_ p
 perceive p⠻cv
 perceiving p⠻cvg
 perhaps p⠻h
 question ⠐q
 quick qk
-_quite q
-_rather r
+_quite_ q
+_rather_ r
 receive rcv
 receiving rcvg
 rejoice rjc
@@ -158,23 +158,23 @@ rejoicing rjcg
 right ⠐r
 said sd
 sh ⠩
-_shall ⠩
+_shall_ ⠩
 should ⠩d
 ^sion ⠨n
-_so s
+_so_ s
 some ⠐s
 spirit ⠸s
 st ⠌
-_still ⠌
+_still_ ⠌
 such s⠡
 th ⠹
-_that t
+_that_ t
 the ⠮
 their ⠸⠮
 themselves ⠮mvs
 there ⠐⠮
 these ⠘⠮
-_this ⠹
+_this_ ⠹
 those ⠘⠹
 through ⠐⠹
 thyself ⠹yf
@@ -186,21 +186,21 @@ tomorrow tm
 tonight tn
 under ⠐u
 upon ⠘u
-_us u
-_very v
-_was ⠴
-_were ⠶
+_us_ u
+_very_ v
+_was_ ⠴
+_were_ ⠶
 wh ⠱
 where ⠐⠱
-_which ⠱
+_which_ ⠱
 whose ⠘⠱
-_will w
+_will_ w
 with ⠾
 word ⠘w
 work ⠐w
 world ⠸w
 would wd
-_you y
+_you_ y
 young ⠐y
 your yr
 yourself yrf
@@ -218,7 +218,7 @@ ellipsis ... ⠲⠲⠲
 exclamation ! ^^⠖
 euro € ⠈⠑
 hyphen - ⠤
-number # ⠼^^
+number ⠼^^
 parentheses () ⠐⠣^^⠐⠜
 period . ^^⠲
 question ? ^^⠦

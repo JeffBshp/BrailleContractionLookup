@@ -1,0 +1,12 @@
+This is probably the first free unicode Braille font in the world.
+It contains braille glyphs in the Unicode range of 0x2800 - 28FF only.
+I used Linux and pfaedit editor to create this font and UCS bitmap 
+fonts to verify the glyph shapes. It can be used in yudit and other
+unicode editors to display braille texts.
+
+This font and its source is free to modify, use, distribute, embed 
+in documents and other larger scale unicode fonts. If you require 
+a license, consider it to be GPL.
+
+
+Vyacheslav Dikonov, 2002 <sdiconov@mail.ru>

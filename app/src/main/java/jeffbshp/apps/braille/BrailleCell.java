@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
-import com.jeffbshp.braille.R;
-
 /**
  * Created by jeff on 5/16/16.
  */

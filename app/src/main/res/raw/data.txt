@@ -207,7 +207,7 @@ yourself yrf
 yourselves yrvs
 apostrophe ' ⠄
 asterisk * ⠐⠔
-brackets [] ⠨⠣^^⠨⠜
+brackets [ ] ⠨⠣^^⠨⠜
 British pound £ ⠈⠇
 colon : ^^⠒
 comma , ^^⠂
@@ -219,11 +219,11 @@ exclamation ! ^^⠖
 euro € ⠈⠑
 hyphen - ⠤
 number ⠼^^
-parentheses () ⠐⠣^^⠐⠜
+parentheses ( ) ⠐⠣^^⠐⠜
 period . ^^⠲
 question ? ^^⠦
-double quotes "" ⠦^^⠴
-single quotes '' ⠠⠦^^⠠⠴
+double quotes " " ⠦^^⠴
+single quotes ' ' ⠠⠦^^⠠⠴
 semicolon ; ^^⠆
 slash / ⠸⠌
 yen ¥ ⠈⠽

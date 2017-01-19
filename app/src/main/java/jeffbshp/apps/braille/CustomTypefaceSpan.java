@@ -5,11 +5,11 @@ import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.style.MetricAffectingSpan;
 
-class CustomTypefaceSpan extends MetricAffectingSpan {
+public class CustomTypefaceSpan extends MetricAffectingSpan {
 
     private final Typeface typeface;
 
-    CustomTypefaceSpan(Typeface typeface) {
+    public CustomTypefaceSpan(Typeface typeface) {
         this.typeface = typeface;
     }
 

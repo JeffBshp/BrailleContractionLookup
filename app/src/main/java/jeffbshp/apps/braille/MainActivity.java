@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.Spannable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +13,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -25,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -35,24 +32,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView editText;
     private BrailleCell cells[];
     private ListView listResults;
-    private List<BrailleContraction> data;
+    private ArrayList<BrailleContraction> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
-
         Button buttonBackspace = (Button) findViewById(R.id.button_backspace);
         Button buttonClear = (Button) findViewById(R.id.button_clear);
         buttonBackspace.setOnClickListener(this);
         buttonClear.setOnClickListener(this);
 
-        BrailleContraction.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/UBraille/UBraille.ttf"));
         loadData();
-        final ArrayAdapter<Spannable> adapter = new ArrayAdapter<>(this, R.layout.search_result, R.id.result_text, new ArrayList<Spannable>());
+
+        int ids[] = new int[2];
+        ids[0] = R.id.result_long;
+        ids[1] = R.id.result_short;
+        final MultiColumnAdapter adapt = new MultiColumnAdapter(this, R.layout.search_result, ids, search(" "));
         listResults = (ListView) findViewById(R.id.list_results);
+        listResults.setAdapter(adapt);
         listResults.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -60,8 +61,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return false;
             }
         });
-        listResults.setAdapter(adapter);
-        adapter.addAll(search(" "));
 
         cells = new BrailleCell[NUM_CELLS];
         LinearLayout cellLayout = (LinearLayout) findViewById(R.id.cells);
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void afterTextChanged(Editable s) {
                 String text = s.toString();
-                List<Spannable> results;
+                ArrayList<CharSequence[]> results;
                 if (digits.matcher(text).find()) {
                     String states[] = text.split(" ");
                     StringBuilder query = new StringBuilder();
@@ -100,9 +99,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     results = search(text);
                 }
-                adapter.clear();
-                adapter.addAll(results);
-                adapter.notifyDataSetChanged();
+                adapt.setList(results);
+                adapt.notifyDataSetChanged();
                 listResults.setSelectionAfterHeaderView();
             }
         });
@@ -192,11 +190,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private List<Spannable> search(String query) {
-        List<Spannable> results = new ArrayList<>();
-        for (BrailleContraction b : data) {
-            if (query.startsWith(" ") || b.longForm.toString().contains(query) || b.shortForm.toString().startsWith(query) || b.braille.startsWith(query)) {
-                results.add(b.toSpannable());
+    private ArrayList<CharSequence[]> search(String query) {
+        ArrayList<CharSequence[]> results = new ArrayList<>();
+        for (BrailleContraction contraction : data) {
+            String l = contraction.longForm.toString();
+            String s = contraction.shortForm.toString();
+            String b = contraction.braille;
+            if (query.startsWith(" ") || l.contains(query) || s.startsWith(query) || b.startsWith(query)) {
+                results.add(contraction.toSpannableArray());
             }
         }
         return results;
@@ -204,7 +205,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void loadData() {
 
-        List<BrailleContraction> data = new ArrayList<>();
+        BrailleContraction.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/JBraille/JBraille.ttf"));
+        ArrayList<BrailleContraction> data = new ArrayList<>();
         InputStream in = getResources().openRawResource(R.raw.data);
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 

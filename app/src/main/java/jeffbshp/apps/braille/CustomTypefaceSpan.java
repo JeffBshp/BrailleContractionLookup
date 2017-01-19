@@ -1,28 +1,27 @@
 package jeffbshp.apps.braille;
 
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.text.TextPaint;
-import android.text.style.TypefaceSpan;
+import android.text.style.MetricAffectingSpan;
 
-/**
- * Created by jeff on 5/17/16.
- */
-public class CustomTypefaceSpan extends TypefaceSpan {
+class CustomTypefaceSpan extends MetricAffectingSpan {
 
     private final Typeface typeface;
 
-    public CustomTypefaceSpan(String family, Typeface typeface) {
-        super(family);
+    CustomTypefaceSpan(Typeface typeface) {
         this.typeface = typeface;
     }
 
     @Override
-    public void updateDrawState(TextPaint ds) {
-        ds.setTypeface(typeface);
+    public void updateMeasureState(TextPaint p) {
+        p.setTypeface(typeface);
+        p.setFlags(p.getFlags() | Paint.SUBPIXEL_TEXT_FLAG);
     }
 
     @Override
-    public void updateMeasureState(TextPaint paint) {
-        paint.setTypeface(typeface);
+    public void updateDrawState(TextPaint tp) {
+        tp.setTypeface(typeface);
+        tp.setFlags(tp.getFlags() | Paint.SUBPIXEL_TEXT_FLAG);
     }
 }

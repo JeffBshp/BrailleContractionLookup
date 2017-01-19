@@ -37,13 +37,19 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Search"
+                android:hint="@string/search_hint"
                 android:id="@+id/edit_text"/>
 
             <Button
                 android:layout_width="@dimen/button_width"
-                android:layout_height="wrap_content"
-                android:text="X"
+                android:layout_height="@dimen/button_width"
+                android:background="@drawable/ic_keyboard_backspace_black_36dp"
+                android:id="@+id/button_backspace"/>
+
+            <Button
+                android:layout_width="@dimen/button_width"
+                android:layout_height="@dimen/button_width"
+                android:background="@drawable/ic_clear_black_36dp"
                 android:id="@+id/button_clear"/>
 
         </LinearLayout>

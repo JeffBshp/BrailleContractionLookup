@@ -4,8 +4,8 @@
 
     <item
         android:id="@+id/action_info"
-        android:icon="@drawable/icon"
-        android:title="Info"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_info_outline_black_36dp"
+        android:title="@string/title_activity_info"
+        app:showAsAction="ifRoom" />
 
 </menu>

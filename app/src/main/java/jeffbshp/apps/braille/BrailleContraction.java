@@ -2,28 +2,22 @@ package jeffbshp.apps.braille;
 
 import android.graphics.Typeface;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.BackgroundColorSpan;
-import android.text.style.ScaleXSpan;
-import android.text.style.TypefaceSpan;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by jeff on 5/17/16.
- */
-public class BrailleContraction {
+class BrailleContraction {
 
-    private static Map<Character, Character> characters = new HashMap<Character, Character>();
+    private static Map<Character, Character> characters = new HashMap<>();
     private static Typeface typeface;
 
-    public final SpannableStringBuilder longForm;
-    public final SpannableStringBuilder shortForm;
-    public final String braille;
+    final SpannableStringBuilder longForm;
+    final SpannableStringBuilder shortForm;
+    final String braille;
 
-    public BrailleContraction(String longForm, String shortForm) {
+    BrailleContraction(String longForm, String shortForm) {
         this.longForm = new SpannableStringBuilder(longForm);
         this.shortForm = new SpannableStringBuilder(shortForm);
         this.braille = convertToBraille(shortForm);
@@ -39,26 +33,26 @@ public class BrailleContraction {
                 spanStart = i;
             }
             if (spanStart >= 0 && !isBraille) {
-                shortForm.setSpan(new CustomTypefaceSpan("monospace", typeface), spanStart, i, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                shortForm.setSpan(new CustomTypefaceSpan(typeface), spanStart, i, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 shortForm.setSpan(new BackgroundColorSpan(0xFFEEEEEE), spanStart, i, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 spanStart = -1;
             } else if (spanStart >= 0 && i == this.shortForm.length() - 1) {
-                shortForm.setSpan(new CustomTypefaceSpan("monospace", typeface), spanStart, i + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                shortForm.setSpan(new CustomTypefaceSpan(typeface), spanStart, i + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 shortForm.setSpan(new BackgroundColorSpan(0xFFEEEEEE), spanStart, i + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 spanStart = -1;
             }
         }
     }
 
-    public Spannable toSpannable() {
+    Spannable toSpannable() {
         return new SpannableStringBuilder(String.format("%-16s ", longForm)).append(shortForm);
     }
 
-    public static void addCharacter(char c, char b) {
+    static void addCharacter(char c, char b) {
         characters.put(c, b);
     }
 
-    public static void setTypeface(Typeface typeface) {
+    static void setTypeface(Typeface typeface) {
         BrailleContraction.typeface = typeface;
     }
 

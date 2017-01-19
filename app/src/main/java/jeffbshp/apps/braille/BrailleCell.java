@@ -6,9 +6,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
-/**
- * Created by jeff on 5/16/16.
- */
 public class BrailleCell extends LinearLayout implements View.OnClickListener {
 
     private CheckBox dots[];

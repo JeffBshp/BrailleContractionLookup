@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="BrailleContractions.Views.InfoPage">
+    <ContentPage.Content>
+        <ScrollView Orientation="Vertical">
+            <StackLayout Orientation="Vertical" Margin="10">
+                <Label Text="This app is intended as a quick reference tool for people using or studying Unified English Braille (UEB). Please note that there are many rules for using Braille that are not covered here."/>
+                <Label Text="The main page displays a list of contractions. Enter text or tap the four Braille cells to search the list."/>
+                <Label Text="Some entries have special symbols that indicate how to use a contraction. The meaning of each symbol is shown below."/>
+                <Grid Margin="0,10,0,30" ColumnSpacing="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40*"/>
+                        <ColumnDefinition Width="60*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" FontAttributes="Bold" Text="Symbol" HorizontalTextAlignment="End"/>
+                    <Label Grid.Row="0" Grid.Column="1" FontAttributes="Bold" Text="Meaning"/>
+                    <Label Grid.Row="1" Grid.Column="0" Text="_" HorizontalTextAlignment="End"/>
+                    <Label Grid.Row="1" Grid.Column="1" Text="No adjacent letters"/>
+                    <Label Grid.Row="2" Grid.Column="0" Text="^" HorizontalTextAlignment="End"/>
+                    <Label Grid.Row="2" Grid.Column="1" Text="Letter(s)"/>
+                    <Label Grid.Row="3" Grid.Column="0" Text="^^" HorizontalTextAlignment="End"/>
+                    <Label Grid.Row="3" Grid.Column="1" Text="Word(s)"/>
+                </Grid>
+                <StackLayout Orientation="Vertical" Spacing="0">
+                    <Label Text="Braille data obtained from:"/>
+                    <Label Text="http://www.duxburysystems.org/braillechart.html"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" Spacing="0">
+                    <Label Text="Icons obtained from:"/>
+                    <Label Text="https://material.io/resources/icons"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" Spacing="0">
+                    <Label Text="Source code:"/>
+                    <Label Text="https://github.com/JeffBshp/BrailleContractionLookup"/>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

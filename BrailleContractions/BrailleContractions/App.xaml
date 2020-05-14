@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:BrailleContractions.Helpers"
+             x:Class="BrailleContractions.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#F5F5F5</Color>
+            <Color x:Key="PrimaryDark">#333333</Color>
+            <Color x:Key="Accent">#BBBBBB</Color>
+            <Color x:Key="LightBackgroundColor">#FFFFFF</Color>
+            <Color x:Key="DarkBackgroundColor">#C0C0C0</Color>
+            <Color x:Key="MediumGrayTextColor">#4D4D4D</Color>
+            <Color x:Key="LightTextColor">#999999</Color>
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}"/>
+                <Setter Property="BarTextColor" Value="Black"/>
+            </Style>
+            <helpers:NegationConverter x:Key="Negation"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

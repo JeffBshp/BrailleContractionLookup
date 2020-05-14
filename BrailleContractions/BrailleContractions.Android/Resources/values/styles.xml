@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+
+  <style name="MainTheme" parent="MainTheme.Base">
+  </style>
+
+  <!-- Base theme applied no matter what API -->
+  <style name="MainTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
+    <item name="windowNoTitle">true</item>
+    <!--We will be using the toolbar so no need to show ActionBar-->
+    <item name="windowActionBar">false</item>
+    
+    <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette -->
+    <!-- colorPrimary is used for the default action bar background -->
+    <item name="colorPrimary">@color/Primary</item>
+    <!-- colorPrimaryDark is used for the status bar -->
+    <item name="colorPrimaryDark">@color/DarkGray</item>
+    <!-- colorAccent is used as the default value for colorControlActivated, which is used to tint widgets -->
+    <!-- You can also set colorControlNormal, colorControlActivated, colorControlHighlight, and colorSwitchThumbNormal. -->
+    <item name="colorAccent">@color/LightGray</item>
+
+    <item name="android:colorPressedHighlight">@color/Highlight</item>
+    <item name="android:colorLongPressedHighlight">@color/Highlight</item>
+    <item name="android:colorFocusedHighlight">@color/Highlight</item>
+    <item name="android:colorActivatedHighlight">@color/Highlight</item>
+    <item name="android:activatedBackgroundIndicator">@color/Highlight</item>
+
+    <item name="windowActionModeOverlay">true</item>
+
+    <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
+
+    <!-- This affects the back button in the toolbar -->
+    <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+  </style>
+
+  <color name="White">#FFFFFF</color>
+  <color name="Primary">#F5F5F5</color>
+  <color name="Highlight">#DDDDDD</color>
+  <color name="LightGray">#BBBBBB</color>
+  <color name="DarkGray">#333333</color>
+  <color name="Black">#000000</color>
+
+  <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
+    <item name="spinBars">true</item>
+    <item name="color">@color/Black</item>
+  </style>
+
+  <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+    <item name="colorAccent">@color/LightGray</item>
+  </style>
+</resources>

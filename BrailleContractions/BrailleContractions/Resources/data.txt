@@ -1,0 +1,241 @@
+a (1)|⠁
+b (2)|⠃
+c (3)|⠉
+d (4)|⠙
+e (5)|⠑
+f (6)|⠋
+g (7)|⠛
+h (8)|⠓
+i (9)|⠊
+j (0)|⠚
+k|⠅
+l|⠇
+m|⠍
+n|⠝
+o|⠕
+p|⠏
+q|⠟
+r|⠗
+s|⠎
+t|⠞
+u|⠥
+v|⠧
+w|⠺
+x|⠭
+y|⠽
+z|⠵
+about|ab
+above|abv
+according|ac
+across|acr
+after|af
+afternoon|afn
+afterward|afw
+again|ag
+against|ag⠌
+almost|alm
+already|alr
+also|al
+although|al⠹
+altogether|alt
+always|alw
+^ance|⠨e
+and|⠯
+ar|⠜
+_as_|z
+^bb^|⠆
+_be_|⠆
+be^|⠆
+because|⠆c
+before|⠆f
+behind|⠆h
+below|⠆l
+beneath|⠆n
+beside|⠆s
+between|⠆t
+beyond|⠆y
+blind|bl
+braille|brl
+_but_|b
+_can_|c
+cannot|⠸c
+^cc^|⠒
+ch|⠡
+character|⠐⠡
+_child_|⠡
+children|⠡n
+con^|⠒
+conceive|⠒cv
+conceiving|⠒cvg
+could|cd
+day|⠐d
+deceive|dcv
+deceiving|dcvg
+declare|dcl
+declaring|dclg
+dis^|⠲
+_do_|d
+^ea^|⠂
+ed|⠫
+either|ei
+en|⠢
+^ence|⠰e
+_enough_|⠢
+er|⠻
+ever|⠐e
+_every_|e
+father|⠐f
+^ff^|⠖
+first|f⠌
+for|⠿
+friend|fr
+_from_|f
+^ful|⠰l
+^gg^|⠶
+gh|⠣
+_go_|g
+good|gd
+great|grt
+had|⠸h
+_have_|h
+here|⠐h
+herself|h⠻f
+him|hm
+himself|hmf
+_his_|⠦
+immediate|imm
+in|⠔
+ing|⠬
+_it_|x
+_its_|xs
+itself|xf
+^ity|⠰y
+_just_|j
+know|⠐k
+_knowledge_|k
+^less|⠨s
+letter|lr
+_like_|l
+little|ll
+lord|⠐l
+many|⠸m
+^ment|⠰t
+_more_|m
+mother|⠐m
+much|m⠡
+must|m⠌
+myself|myf
+name|⠐n
+necessary|nec
+neither|nei
+^ness|⠰s
+_not_|n
+of|⠷
+one|⠐o
+oneself|⠐of
+^ong|⠰g
+ou|⠳
+ought|⠐⠳
+^ound|⠨d
+^ount|⠨t
+ourselves|⠳rvs
+_out_|⠳
+ow|⠪
+paid|pd
+part|⠐p
+_people_|p
+perceive|p⠻cv
+perceiving|p⠻cvg
+perhaps|p⠻h
+question|⠐q
+quick|qk
+_quite_|q
+_rather_|r
+receive|rcv
+receiving|rcvg
+rejoice|rjc
+rejoicing|rjcg
+right|⠐r
+said|sd
+sh|⠩
+_shall_|⠩
+should|⠩d
+^sion|⠨n
+_so_|s
+some|⠐s
+spirit|⠸s
+st|⠌
+_still_|⠌
+such|s⠡
+th|⠹
+_that_|t
+the|⠮
+their|⠸⠮
+themselves|⠮mvs
+there|⠐⠮
+these|⠘⠮
+_this_|⠹
+those|⠘⠹
+through|⠐⠹
+thyself|⠹yf
+time|⠐t
+^tion|⠰n
+today|td
+together|tgr
+tomorrow|tm
+tonight|tn
+under|⠐u
+upon|⠘u
+_us_|u
+_very_|v
+_was_|⠴
+_were_|⠶
+wh|⠱
+where|⠐⠱
+_which_|⠱
+whose|⠘⠱
+_will_|w
+with|⠾
+word|⠘w
+work|⠐w
+world|⠸w
+would|wd
+_you_|y
+young|⠐y
+your|yr
+yourself|yrf
+yourselves|yrvs
+apostrophe|⠄|'
+asterisk|⠐⠔|*
+brackets|⠨⠣^^⠨⠜|[ ]
+British pound|⠈⠇|£
+colon|^^⠒|:
+comma|^^⠂|,
+dash|⠠⠤|-
+decimal|^⠲^|.
+dollar|⠈⠎|$
+ellipsis|⠲⠲⠲|...
+exclamation|^^⠖|!
+euro|⠈⠑|€
+hyphen|⠤|-
+number|⠼^^
+parentheses|⠐⠣^^⠐⠜|( )
+period|^^⠲|.
+question|^^⠦|?
+double quotes|⠦^^⠴|" "
+single quotes|⠠⠦^^⠠⠴|' '
+semicolon|^^⠆|;
+slash|⠸⠌|/
+yen|⠈⠽|¥
+capital letter|⠠^^
+capital word|⠠⠠^^
+capital passage|⠠⠠⠠^^
+capital, term.|⠠⠄^^
+grade 1 symbol|⠰^^
+grade 1 word|⠰⠰^^
+grade 1 passage|⠰⠰⠰^^
+grade 1, term.|⠰⠄^^
+italic symbol|⠨⠰^^
+italic word|⠨⠂^^
+italic passage|⠨⠶^^
+italic, term.|⠨⠄^^

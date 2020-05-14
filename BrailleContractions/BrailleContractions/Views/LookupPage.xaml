@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="clr-namespace:BrailleContractions.Views"
+    x:Class="BrailleContractions.Views.LookupPage">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Spacing="0">
+            <StackLayout Orientation="Horizontal" Spacing="0" Margin="5">
+                <Entry
+                    Text="{Binding Text}"
+                    TextChanged="TextChanged"
+                    Placeholder="Search"
+                    HorizontalOptions="FillAndExpand"/>
+                <Button
+                    Clicked="ClickedBackspace"
+                    Image="baseline_keyboard_backspace_black_48"
+                    BackgroundColor="Transparent"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    Margin="10,0"/>
+                <Button
+                    Clicked="ClickedClear"
+                    Image="baseline_clear_black_48"
+                    BackgroundColor="Transparent"
+                    WidthRequest="40"
+                    HeightRequest="40"/>
+            </StackLayout>
+            <StackLayout
+                Orientation="Horizontal"
+                Spacing="16"
+                IsVisible="{Binding CellsVisible}"
+                HorizontalOptions="Center"
+                Margin="5,10">
+                <v:BrailleInputCell BindingContext="{Binding Cells[0]}"/>
+                <v:BrailleInputCell BindingContext="{Binding Cells[1]}"/>
+                <v:BrailleInputCell BindingContext="{Binding Cells[2]}"/>
+                <v:BrailleInputCell BindingContext="{Binding Cells[3]}"/>
+            </StackLayout>
+            <ListView
+                ItemsSource="{Binding Contractions}"
+                RowHeight="{Binding RowHeight}"
+                SelectionMode="None"
+                ItemTapped="ItemTapped"
+                Margin="5">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <v:ContractionViewCell BindingContext="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

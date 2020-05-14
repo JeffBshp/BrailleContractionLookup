@@ -1,0 +1,8 @@
+.vs
+bin/
+obj/
+*.user
+
+# Android resource file. Some people commit this, but I choose not to.
+# VS should generate it even in a freshly cloned repo.
+**/Resource.designer.cs

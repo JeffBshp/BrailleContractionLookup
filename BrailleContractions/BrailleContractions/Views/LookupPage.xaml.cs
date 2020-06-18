@@ -13,7 +13,7 @@ namespace BrailleContractions.Views
             InitializeComponent();
             BindingContext = viewModel;
             Title = "Braille Contractions";
-            ToolbarItems.Add(new ToolbarItem("Info", "outline_info_black_48",
+            ToolbarItems.Add(new ToolbarItem("Info", "outline_info_48",
                 () => Navigation.PushAsync(new InfoPage())));
             SizeChanged += PageSizeChanged;
         }

@@ -35,7 +35,7 @@ namespace BrailleContractions.ViewModels
         /// </summary>
         public double RowHeight { get; }
 
-        private bool _listIsRefreshing;
+        private bool _listIsRefreshing = true;
 
         /// <summary>
         /// Toggles the refresh animation on the ListView.
@@ -46,9 +46,9 @@ namespace BrailleContractions.ViewModels
             private set => SetProperty(ref _listIsRefreshing, value);
         }
 
-        private readonly IReadOnlyList<ContractionVM> _allContractions;
+        private IReadOnlyList<ContractionVM> _allContractions = new List<ContractionVM>(0);
 
-        private List<ContractionVM> _contractions;
+        private List<ContractionVM> _contractions = new List<ContractionVM>(0);
 
         /// <summary>
         /// Contractions that are currently visible in the ListView.
@@ -66,11 +66,9 @@ namespace BrailleContractions.ViewModels
         /// Constructor.
         /// </summary>
         /// <param name="settings">App settings.</param>
-        public LookupPageVM(Settings settings, IEnumerable<ContractionVM> contractions)
+        public LookupPageVM(Settings settings)
         {
             Settings = settings;
-            _allContractions = contractions.ToList();
-            _contractions = new List<ContractionVM>(_allContractions);
 
             // Adjust the row height to hopefully accommodate the device's font scale setting.
             // On Android the possible values are 0.85, 1.00, 1.15, 1.30
@@ -85,6 +83,13 @@ namespace BrailleContractions.ViewModels
                 Cells[i] = new BrailleInputCellVM(settings);
                 Cells[i].PropertyChanged += CellPropertyChanged;
             }
+
+            Task.Run(() =>
+            {
+                _allContractions = DataReader.ReadUebContractions(settings).ToList();
+                // Back to the main thread to update the UI, which also ends the initial refresh animation
+                Device.BeginInvokeOnMainThread(async () => await Update(Text, false, false));
+            });
         }
 
         /// <summary>
@@ -134,14 +139,18 @@ namespace BrailleContractions.ViewModels
                 }
                 _ignoreChanges = false;
 
-                // Run the search on another thread. The current thread can go handle other UI business while awaiting.
-                var result = await Task.Run(() => Search(newText));
-
-                // If the number has not changed, set the result and end the refresh
-                if (_updateId == updateId)
+                // Only search if we have finished loading the data file
+                if (_allContractions.Count > 0)
                 {
-                    Contractions = result;
-                    ListIsRefreshing = false;
+                    // Run the search on another thread. The current thread can go handle other UI business while awaiting.
+                    var result = await Task.Run(() => Search(newText));
+
+                    // If the number has not changed, set the result and end the refresh
+                    if (_updateId == updateId)
+                    {
+                        Contractions = result;
+                        ListIsRefreshing = false;
+                    }
                 }
             }
         }

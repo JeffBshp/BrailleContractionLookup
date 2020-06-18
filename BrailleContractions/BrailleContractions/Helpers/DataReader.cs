@@ -96,11 +96,9 @@ namespace BrailleContractions.Helpers
         /// <param name="newChar">The character to append.</param>
         private static void AppendCharacter(FormattedString formattedString, char newChar)
         {
-            bool isBraille(char? c) => c.HasValue && c >= 0x2800 && c <= 0x28FF;
-
             var lastSpan = formattedString.Spans.LastOrDefault();
-            bool isLastCharBraille = isBraille(lastSpan?.Text.Last());
-            bool isNewCharBraille = isBraille(newChar);
+            bool isLastCharBraille = lastSpan?.Text.Last().IsBraille() ?? false;
+            bool isNewCharBraille = newChar.IsBraille();
 
             if (lastSpan != null && isLastCharBraille == isNewCharBraille)
             {

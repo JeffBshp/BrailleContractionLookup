@@ -8,11 +8,18 @@
         <StackLayout Orientation="Vertical" Spacing="0">
             <StackLayout Orientation="Horizontal" Spacing="0" Margin="5">
                 <Entry
+                    AutomationProperties.IsInAccessibleTree="True"
+                    AutomationProperties.Name="Search"
+                    AutomationProperties.HelpText="Enter text here to filter the list of contractions at the bottom of this page."
                     Text="{Binding Text}"
+                    FontFamily="{StaticResource JBraille}"
                     TextChanged="TextChanged"
                     Placeholder="Search"
                     HorizontalOptions="FillAndExpand"/>
                 <Button
+                    AutomationProperties.IsInAccessibleTree="True"
+                    AutomationProperties.Name="Backspace"
+                    AutomationProperties.HelpText="Delete the last character in the Search box or reset one of the Braille cells below."
                     Clicked="ClickedBackspace"
                     Image="baseline_keyboard_backspace_black_48"
                     BackgroundColor="Transparent"
@@ -20,6 +27,9 @@
                     HeightRequest="40"
                     Margin="10,0"/>
                 <Button
+                    AutomationProperties.IsInAccessibleTree="True"
+                    AutomationProperties.Name="Clear"
+                    AutomationProperties.HelpText="Delete all text from the Search box or reset all of the Braille cells below."
                     Clicked="ClickedClear"
                     Image="baseline_clear_black_48"
                     BackgroundColor="Transparent"
@@ -42,6 +52,7 @@
                 RowHeight="{Binding RowHeight}"
                 SelectionMode="None"
                 ItemTapped="ItemTapped"
+                IsRefreshing="{Binding ListIsRefreshing, Mode=OneWay}"
                 Margin="5">
                 <ListView.ItemTemplate>
                     <DataTemplate>

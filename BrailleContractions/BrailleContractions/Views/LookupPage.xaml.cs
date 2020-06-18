@@ -45,22 +45,32 @@ namespace BrailleContractions.Views
             viewModel.Settings.DotSize = dotSize;
         }
 
-        private void TextChanged(object sender, TextChangedEventArgs e)
+        private async void TextChanged(object sender, TextChangedEventArgs e)
         {
             var viewModel = (LookupPageVM)BindingContext;
-            viewModel.TextChanged(e.NewTextValue);
+            // Update Cells but not Text
+            await viewModel.Update(e.NewTextValue, false, true);
         }
 
-        private void ClickedBackspace(object sender, EventArgs e)
+        private async void ClickedBackspace(object sender, EventArgs e)
         {
             var viewModel = (LookupPageVM)BindingContext;
-            viewModel.Backspace();
+            string newText = viewModel.Text;
+
+            if (newText.Length > 0)
+            {
+                newText = newText.Substring(0, newText.Length - 1);
+            }
+
+            // Update both Text and Cells
+            await viewModel.Update(newText, true, true);
         }
 
-        private void ClickedClear(object sender, EventArgs e)
+        private async void ClickedClear(object sender, EventArgs e)
         {
             var viewModel = (LookupPageVM)BindingContext;
-            viewModel.Clear();
+            // Update both Text and Cells
+            await viewModel.Update(string.Empty, true, true);
         }
 
         private void ItemTapped(object sender, ItemTappedEventArgs e)

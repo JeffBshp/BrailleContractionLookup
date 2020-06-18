@@ -1,9 +1,9 @@
-﻿using BrailleContractions.Services;
-using System;
+﻿using BrailleContractions.Helpers;
+using BrailleContractions.Services;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BrailleContractions.ViewModels
@@ -35,20 +35,32 @@ namespace BrailleContractions.ViewModels
         /// </summary>
         public double RowHeight { get; }
 
+        private bool _listIsRefreshing;
+
+        /// <summary>
+        /// Toggles the refresh animation on the ListView.
+        /// </summary>
+        public bool ListIsRefreshing
+        {
+            get => _listIsRefreshing;
+            private set => SetProperty(ref _listIsRefreshing, value);
+        }
+
         private readonly IReadOnlyList<ContractionVM> _allContractions;
+
+        private List<ContractionVM> _contractions;
 
         /// <summary>
         /// Contractions that are currently visible in the ListView.
         /// </summary>
-        public List<ContractionVM> Contractions { get; private set; }
+        public List<ContractionVM> Contractions
+        {
+            get => _contractions;
+            private set => SetProperty(ref _contractions, value);
+        }
 
-        /// <summary>
-        /// Set to true when programmatically changing the state of the Braille input cells.
-        /// This makes it possible to differentiate such changes from user input.
-        /// A TapGestureRecognizer is not ideal because tapping is not the only way a user can toggle a dot,
-        /// especially in an app that is supposed to be accessible to the visually impaired.
-        /// </summary>
-        private bool _updatingCells;
+        private bool _ignoreChanges;
+        private int _updateId;
 
         /// <summary>
         /// Constructor.
@@ -58,7 +70,7 @@ namespace BrailleContractions.ViewModels
         {
             Settings = settings;
             _allContractions = contractions.ToList();
-            Contractions = new List<ContractionVM>(_allContractions);
+            _contractions = new List<ContractionVM>(_allContractions);
 
             // Adjust the row height to hopefully accommodate the device's font scale setting.
             // On Android the possible values are 0.85, 1.00, 1.15, 1.30
@@ -76,36 +88,83 @@ namespace BrailleContractions.ViewModels
         }
 
         /// <summary>
-        /// Called when the user edits the search text.
+        /// Updates the text box and performs a search when a Braille input cell changes state.
         /// </summary>
-        /// <param name="newText">The text after the edit.</param>
-        public void TextChanged(string newText)
+        private async void CellPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            // Set this flag so we can change the state of the Braille input cells without triggering another text change
-            _updatingCells = true;
-
-            // If the user entered only spaces and digits, treat these as dot numbers and update the cells accordingly
-            if (newText.All(x => x == ' ' || char.IsDigit(x)))
+            // Only respond to a change of the "Dots" property or all properties (empty string), not Dot1 through Dot6
+            if (e.PropertyName == nameof(BrailleInputCellVM.Dots) || string.IsNullOrEmpty(e.PropertyName))
             {
-                var cellStates = newText.Split(' ');
+                // Convert the cells into text
+                string newText = new string(Cells.Where(x => x.Dots != 0).Select(x => x.Char).ToArray());
+                // Update Text but not Cells
+                await Update(newText, true, false);
+            }
+        }
 
-                for (int i = 0; i < Cells.Length; i++)
+        /// <summary>
+        /// Updates the text box and/or Braille input cells in response to user input.
+        /// </summary>
+        /// <param name="newText">The latest text that was entered, or the text that should be set after the latest cell change.</param>
+        /// <param name="setText">Whether to set <see cref="Text"/> equal to <paramref name="newText"/>.</param>
+        /// <param name="setCells">Whether to update <see cref="Cells"/> to match the new text.</param>
+        public async Task Update(string newText, bool setText, bool setCells)
+        {
+            // Do nothing when this flag is set; see below
+            if (!_ignoreChanges)
+            {
+                // Just a unique number that identifies this particular Update call; see below.
+                // No lock statement is used here because we know that this method only gets called on the main (UI) thread.
+                int updateId = ++_updateId;
+
+                // Start the refresh animation and remove the previous results from the list
+                ListIsRefreshing = true;
+                Contractions = new List<ContractionVM>(0);
+
+                // Set Text and Cells here on the UI thread.
+                // This will cause recursive Update calls, so set a flag to ignore those.
+                _ignoreChanges = true;
+                if (setText)
                 {
-                    int dots = 0;
+                    Text = newText;
+                }
+                if (setCells)
+                {
+                    SetCells(newText);
+                }
+                _ignoreChanges = false;
 
-                    if (i < cellStates.Length)
-                    {
-                        // Select the individual digits representing Braille dot numbers.
-                        // We split on space, so all characters are digits here.
-                        var dotNumbers = cellStates[i].Select(char.GetNumericValue).Where(x => x >= 1 && x <= 6);
-                        // Convert to a bitfield
-                        dots = dotNumbers.Aggregate(0, (x, y) => x | (int)Math.Pow(2, y - 1));
-                    }
+                // Run the search on another thread. The current thread can go handle other UI business while awaiting.
+                var result = await Task.Run(() => Search(newText));
 
-                    Cells[i].Dots = dots;
+                // If the number has not changed, set the result and end the refresh
+                if (_updateId == updateId)
+                {
+                    Contractions = result;
+                    ListIsRefreshing = false;
                 }
             }
-            // Otherwise clear all cells and assume they want to do a text-based search
+        }
+
+        /// <summary>
+        /// Sets the Braille input cells to match the given text.
+        /// </summary>
+        /// <param name="newText">The latest text that was entered.</param>
+        private void SetCells(string newText)
+        {
+            // If the text contains 1 to 4 Braille characters, update the input cells to match
+            if (newText.Length > 0 && newText.Length <= Cells.Length && newText.All(Extensions.IsBraille))
+            {
+                for (int i = 0; i < Cells.Length; i++)
+                {
+                    Cells[i].Dots = i < newText.Length
+                        // Take the lowest 8 bits because Unicode supports 8-dot cells.
+                        // This app currently supports only 6-dot cells, but the 2 extra bits won't hurt.
+                        ? newText[i] & 0xFF
+                        : 0;
+                }
+            }
+            // Otherwise clear all cells
             else
             {
                 foreach (var cell in Cells)
@@ -113,110 +172,14 @@ namespace BrailleContractions.ViewModels
                     cell.Dots = 0;
                 }
             }
-
-            _updatingCells = false;
-
-            Search();
         }
 
         /// <summary>
-        /// Clears the last non-empty cell or deletes one character from the text box.
+        /// Returns Braille contractions that match the given query.
         /// </summary>
-        public void Backspace()
+        /// <param name="query">The text to search for.</param>
+        private List<ContractionVM> Search(string query)
         {
-            bool allCellsEmpty = true;
-            string text = Text;
-
-            // Work backwards until we find a non-empty cell to clear
-            for (int i = Cells.Length - 1; i >= 0; i--)
-            {
-                if (Cells[i].Dots != 0)
-                {
-                    // CellPropertyChanged will be called
-                    Cells[i].Dots = 0;
-                    allCellsEmpty = false;
-                    break;
-                }
-            }
-
-            // If all cells are empty, delete a character from the text box instead
-            if (allCellsEmpty && text.Length > 0)
-            {
-                Text = text.Substring(0, text.Length - 1);
-                // CellPropertyChanged was not called, so perform the search here
-                Search();
-            }
-        }
-
-        /// <summary>
-        /// Clears the text box and all Braille input cells.
-        /// </summary>
-        public void Clear()
-        {
-            // Set this flag to avoid calling Search until we finish the loop
-            _updatingCells = true;
-            foreach (var cell in Cells)
-            {
-                cell.Dots = 0;
-            }
-            _updatingCells = false;
-
-            Text = string.Empty;
-
-            Search();
-        }
-
-        /// <summary>
-        /// Updates the text box and performs a search when a Braille input cell changes state.
-        /// </summary>
-        private void CellPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            // Ignore when we are programmatically updating cells.
-            // The PropertyName check just ensures that we only handle each change once.
-            if (!_updatingCells && (e.PropertyName == nameof(BrailleInputCellVM.Dots) || string.IsNullOrEmpty(e.PropertyName)))
-            {
-                var text = new StringBuilder();
-                bool anyDots = false;
-
-                // Work backwards
-                for (int i = Cells.Length - 1; i >= 0; i--)
-                {
-                    // Get a string that contains the dot numbers of the current cell
-                    string cellState = string.Join(string.Empty, Enumerable.Range(1, 6)
-                        .Where(x => (Cells[i].Dots & (int)Math.Pow(2, x - 1)) != 0));
-
-                    // Skip empty cells until we find the first (from the end) non-empty cell.
-                    // Then insert all cells whether they are empty or not.
-                    // So if Cells[1] has dots 1 & 2 filled while the other cells are empty,
-                    // then the final string will be " 12" (note the leading space).
-                    if (anyDots || cellState.Length > 0)
-                    {
-                        anyDots = true;
-                        text.Insert(0, cellState);
-                        text.Insert(0, ' ');
-                    }
-                }
-
-                if (text.Length > 0)
-                {
-                    // Remove the initial space character
-                    text.Remove(0, 1);
-                }
-
-                Text = text.ToString();
-                Search();
-            }
-        }
-
-        /// <summary>
-        /// Filters the ListView to show only items that match the current text or Braille cell input.
-        /// </summary>
-        private void Search()
-        {
-            string query = Cells.Any(x => x.Dots != 0)
-                    ? new string(Cells.Where(x => x.Dots != 0).Select(x => x.Char).ToArray())
-                    : Text;
-
             var results = query.Length == 0
                 ? _allContractions.AsEnumerable()
                 : _allContractions.Where(x =>
@@ -224,8 +187,7 @@ namespace BrailleContractions.ViewModels
                     x.ShortForm.ToString().Contains(query) ||
                     x.AllBrailleShortForm.ToString().Contains(query));
 
-            Contractions = new List<ContractionVM>(results);
-            OnPropertyChanged(nameof(Contractions));
+            return new List<ContractionVM>(results);
         }
     }
 }

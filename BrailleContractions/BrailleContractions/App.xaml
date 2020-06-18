@@ -17,6 +17,9 @@
                 <Setter Property="BarTextColor" Value="Black"/>
             </Style>
             <helpers:NegationConverter x:Key="Negation"/>
+            <OnPlatform x:Key="JBraille" x:TypeArguments="x:String">
+                <On Platform="Android" Value="fonts/JBraille.ttf#JBraille"/>
+            </OnPlatform>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

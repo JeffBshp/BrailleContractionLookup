@@ -4,7 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="BrailleContractions.Views.ContractionViewCell">
     <ViewCell.View>
-        <StackLayout Orientation="Horizontal" Margin="5,0">
+        <StackLayout Orientation="Horizontal" Margin="5,0"
+            AutomationProperties.IsInAccessibleTree="True"
+            AutomationProperties.Name="{Binding LongForm}"
+            AutomationProperties.HelpText="{Binding AutomationHelpText}">
             <StackLayout.Resources>
                 <ResourceDictionary>
                     <Style TargetType="Label">
@@ -18,13 +21,16 @@
                 </ResourceDictionary>
             </StackLayout.Resources>
             <Label
+                AutomationProperties.IsInAccessibleTree="False"
                 Text="{Binding LongForm}"
                 HorizontalTextAlignment="Start"/>
             <Label
+                AutomationProperties.IsInAccessibleTree="False"
                 FormattedText="{Binding ShortForm}"
                 IsVisible="{Binding Settings.DisplayShortFormInBraille, Converter={StaticResource Key=Negation}}"
                 HorizontalTextAlignment="End"/>
             <Label
+                AutomationProperties.IsInAccessibleTree="False"
                 FormattedText="{Binding AllBrailleShortForm}"
                 IsVisible="{Binding Settings.DisplayShortFormInBraille}"
                 HorizontalTextAlignment="End"/>

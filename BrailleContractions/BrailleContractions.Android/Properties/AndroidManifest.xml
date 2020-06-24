@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="4" android:versionName="1.0.3" package="jeffbshp.apps.braille" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="5" android:versionName="1.0.4" package="jeffbshp.apps.braille" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="16" android:targetSdkVersion="28" />
 	<application android:label="Braille Contraction Lookup" android:icon="@drawable/icon"></application>
 </manifest>

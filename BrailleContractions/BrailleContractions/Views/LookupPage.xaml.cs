@@ -1,5 +1,7 @@
 ﻿using BrailleContractions.ViewModels;
 using System;
+using System.ComponentModel;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,6 +18,22 @@ namespace BrailleContractions.Views
             ToolbarItems.Add(new ToolbarItem("Info", "outline_info_48",
                 () => Navigation.PushAsync(new InfoPage())));
             SizeChanged += PageSizeChanged;
+            viewModel.PropertyChanged += ViewModelPropertyChanged;
+        }
+
+        private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            // Reset scroll position when the refreshing property changes to false
+            if (e.PropertyName == nameof(LookupPageVM.ListIsRefreshing) &&
+                sender is LookupPageVM viewModel &&
+                viewModel.ListIsRefreshing == false)
+            {
+                var first = viewModel.Contractions.FirstOrDefault();
+                if (first != null)
+                {
+                    ContractionListView.ScrollTo(first, ScrollToPosition.Start, false);
+                }
+            }
         }
 
         /// <summary>
@@ -48,7 +66,6 @@ namespace BrailleContractions.Views
         private async void TextChanged(object sender, TextChangedEventArgs e)
         {
             var viewModel = (LookupPageVM)BindingContext;
-            // Update Cells but not Text
             await viewModel.Update(e.NewTextValue, false, true);
         }
 
@@ -59,24 +76,29 @@ namespace BrailleContractions.Views
 
             if (newText.Length > 0)
             {
-                newText = newText.Substring(0, newText.Length - 1);
-            }
+                do
+                {
+                    newText = newText.Substring(0, newText.Length - 1);
+                } // Continue deleting if there are trailing empty Braille characters
+                while (newText.Length > 0 && newText.Last() == '\u2800');
 
-            // Update both Text and Cells
-            await viewModel.Update(newText, true, true);
+                await viewModel.Update(newText, true, true);
+            }
         }
 
         private async void ClickedClear(object sender, EventArgs e)
         {
             var viewModel = (LookupPageVM)BindingContext;
-            // Update both Text and Cells
-            await viewModel.Update(string.Empty, true, true);
+
+            if (viewModel.Text.Length > 0)
+            {
+                await viewModel.Update(string.Empty, true, true);
+            }
         }
 
         private void ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var viewModel = (LookupPageVM)BindingContext;
-            // Toggle this setting when an item is tapped
             viewModel.Settings.DisplayShortFormInBraille = !viewModel.Settings.DisplayShortFormInBraille;
         }
     }

@@ -48,6 +48,7 @@
                 <v:BrailleInputCell BindingContext="{Binding Cells[3]}"/>
             </StackLayout>
             <ListView
+                x:Name="ContractionListView"
                 ItemsSource="{Binding Contractions}"
                 RowHeight="{Binding RowHeight}"
                 SelectionMode="None"

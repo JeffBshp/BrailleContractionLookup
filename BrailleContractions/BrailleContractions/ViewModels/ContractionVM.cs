@@ -21,6 +21,12 @@ namespace BrailleContractions.ViewModels
         public string LongForm { get; }
 
         /// <summary>
+        /// If <see cref="LongForm"/> describes a symbol ("dollar sign"), then this is the actual symbol ("$").
+        /// Can be null.
+        /// </summary>
+        public string Symbol { get; }
+
+        /// <summary>
         /// The contracted form.
         /// </summary>
         public FormattedString ShortForm { get; }
@@ -32,10 +38,11 @@ namespace BrailleContractions.ViewModels
 
         public string AutomationHelpText { get; }
 
-        public ContractionVM(Settings settings, string longForm, FormattedString shortForm, FormattedString allBrailleShortForm)
+        public ContractionVM(Settings settings, string longForm, string symbol, FormattedString shortForm, FormattedString allBrailleShortForm)
         {
             Settings = settings;
             LongForm = longForm;
+            Symbol = symbol;
             ShortForm = shortForm;
             AllBrailleShortForm = allBrailleShortForm;
             AutomationHelpText = string.Join(" ", allBrailleShortForm.ToString().Select(BrailleCharacterDescription));

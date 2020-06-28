@@ -213,29 +213,29 @@ colon|^^⠒|:
 comma|^^⠂|,
 dash|⠠⠤|-
 decimal|^⠲^|.
-dollar|⠈⠎|$
+dollar sign|⠈⠎|$
 ellipsis|⠲⠲⠲|...
-exclamation|^^⠖|!
+exclamation mark|^^⠖|!
 euro|⠈⠑|€
 hyphen|⠤|-
-number|⠼^^
+numeric indicator|⠼^^
 parentheses|⠐⠣^^⠐⠜|( )
 period|^^⠲|.
-question|^^⠦|?
+question mark|^^⠦|?
 double quotes|⠦^^⠴|" "
 single quotes|⠠⠦^^⠠⠴|' '
 semicolon|^^⠆|;
-slash|⠸⠌|/
+forward slash|⠸⠌|/
 yen|⠈⠽|¥
 capital letter|⠠^^
 capital word|⠠⠠^^
 capital passage|⠠⠠⠠^^
-capital, term.|⠠⠄^^
+capital terminator|⠠⠄^^
 grade 1 symbol|⠰^^
 grade 1 word|⠰⠰^^
 grade 1 passage|⠰⠰⠰^^
-grade 1, term.|⠰⠄^^
+grade 1 terminator|⠰⠄^^
 italic symbol|⠨⠰^^
 italic word|⠨⠂^^
 italic passage|⠨⠶^^
-italic, term.|⠨⠄^^
+italic terminator|⠨⠄^^

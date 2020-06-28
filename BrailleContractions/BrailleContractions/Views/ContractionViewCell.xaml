@@ -22,8 +22,15 @@
             </StackLayout.Resources>
             <Label
                 AutomationProperties.IsInAccessibleTree="False"
-                Text="{Binding LongForm}"
-                HorizontalTextAlignment="Start"/>
+                HorizontalTextAlignment="Start">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding LongForm}"/>
+                        <Span Text=" "/>
+                        <Span Text="{Binding Symbol}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
             <Label
                 AutomationProperties.IsInAccessibleTree="False"
                 FormattedText="{Binding ShortForm}"

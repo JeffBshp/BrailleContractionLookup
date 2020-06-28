@@ -50,6 +50,7 @@ namespace BrailleContractions.Helpers
                     if (split.Length >= 2)
                     {
                         string longForm = split[0];
+                        string symbol = null;
                         var shortForm = new FormattedString();
                         var braille = new FormattedString();
 
@@ -74,14 +75,13 @@ namespace BrailleContractions.Helpers
                             AppendCharacter(braille, brailleChar);
                         }
 
-                        // If there is a third item on this line, it's a special symbol. Just append it to the long form.
-                        // TODO: Remove this logic and instead combine these items in the data file?
+                        // If there is a third item on this line, it's a special symbol such as "$".
                         if (split.Length > 2)
                         {
-                            longForm += ' ' + split[2];
+                            symbol = split[2];
                         }
 
-                        yield return new ContractionVM(settings, longForm, shortForm, braille);
+                        yield return new ContractionVM(settings, longForm, symbol, shortForm, braille);
                     }
                 }
             }

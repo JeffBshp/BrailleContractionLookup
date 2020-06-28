@@ -101,7 +101,7 @@ namespace BrailleContractions.ViewModels
             if (e.PropertyName == nameof(BrailleInputCellVM.Dots) || string.IsNullOrEmpty(e.PropertyName))
             {
                 // Convert the cells into text
-                string newText = new string(Cells.Where(x => x.Dots != 0).Select(x => x.Char).ToArray());
+                string newText = new string(Cells.Select(x => x.Char).ToArray()).TrimEnd('\u2800');
                 // Update Text but not Cells
                 await Update(newText, true, false);
             }
@@ -143,7 +143,20 @@ namespace BrailleContractions.ViewModels
                 if (_allContractions.Count > 0)
                 {
                     // Run the search on another thread. The current thread can go handle other UI business while awaiting.
-                    var result = await Task.Run(() => Search(newText));
+                    var result = await Task.Run(() =>
+                    {
+                        string query = newText.Trim('\u2800');
+
+                        var results = query.Length == 0
+                            ? _allContractions.AsEnumerable()
+                            : _allContractions.Where(x =>
+                                x.LongForm.Contains(query) ||
+                                (x.Symbol != null && x.Symbol.Contains(query)) ||
+                                x.ShortForm.ToString().Contains(query) ||
+                                x.AllBrailleShortForm.ToString().Contains(query));
+
+                        return new List<ContractionVM>(results);
+                    });
 
                     // If the number has not changed, set the result and end the refresh
                     if (_updateId == updateId)
@@ -181,22 +194,6 @@ namespace BrailleContractions.ViewModels
                     cell.Dots = 0;
                 }
             }
-        }
-
-        /// <summary>
-        /// Returns Braille contractions that match the given query.
-        /// </summary>
-        /// <param name="query">The text to search for.</param>
-        private List<ContractionVM> Search(string query)
-        {
-            var results = query.Length == 0
-                ? _allContractions.AsEnumerable()
-                : _allContractions.Where(x =>
-                    x.LongForm.Contains(query) ||
-                    x.ShortForm.ToString().Contains(query) ||
-                    x.AllBrailleShortForm.ToString().Contains(query));
-
-            return new List<ContractionVM>(results);
         }
     }
 }

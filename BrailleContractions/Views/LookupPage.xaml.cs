@@ -15,8 +15,9 @@ namespace BrailleContractions.Views
             InitializeComponent();
             BindingContext = viewModel;
             Title = "Braille Contractions";
+            string appVersion = viewModel.Settings.SystemService.AppVersion;
             ToolbarItems.Add(new ToolbarItem("Info", "outline_info_48",
-                () => Navigation.PushAsync(new InfoPage())));
+                () => Navigation.PushAsync(new InfoPage(appVersion))));
             SizeChanged += PageSizeChanged;
             viewModel.PropertyChanged += ViewModelPropertyChanged;
         }

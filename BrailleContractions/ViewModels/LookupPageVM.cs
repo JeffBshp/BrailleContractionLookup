@@ -69,20 +69,17 @@ namespace BrailleContractions.ViewModels
         {
             Settings = settings;
 
-            // Adjust the row height to hopefully accommodate the device's font scale setting.
-            // On Android the possible values are 0.85, 1.00, 1.15, 1.30
-            double fontScale = DependencyService.Get<ISystemService>().FontScale;
-            RowHeight = fontScale < 1 ? 40
-                : fontScale < 1.1 ? 48
-                : fontScale < 1.2 ? 56
-                : 64;
+            // Adjust the row height to hopefully accommodate the device's font scale setting
+            RowHeight = (int)settings.SystemService.FontScale;
 
+            // Construct the big Braille cells for user input
             for (int i = 0; i < Cells.Length; i++)
             {
                 Cells[i] = new BrailleInputCellVM(settings);
                 Cells[i].PropertyChanged += CellPropertyChanged;
             }
 
+            // Subscribe to the data reader and fill in the ListView when it's done
             dataReader.WhenDone(data =>
             {
                 _sourceData = data;

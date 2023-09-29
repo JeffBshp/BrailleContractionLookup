@@ -1,4 +1,7 @@
-﻿namespace BrailleContractions.ViewModels
+﻿using BrailleContractions.Services;
+using Xamarin.Forms;
+
+namespace BrailleContractions.ViewModels
 {
     /// <summary>
     /// Contains global settings that views can bind to.
@@ -6,6 +9,11 @@
     /// </summary>
     public class Settings : BaseVM
     {
+        /// <summary>
+        /// Gets the platform-specific implementation of <see cref="ISystemService"/>.
+        /// </summary>
+        public ISystemService SystemService { get; } = DependencyService.Get<ISystemService>();
+
         private bool _displayShortFormInBraille;
 
         /// <summary>

@@ -48,7 +48,7 @@
                 <StackLayout Orientation="Vertical" Spacing="0">
                     <Label Text="Source code:"/>
                     <Label Text="https://github.com/JeffBshp/BrailleContractionLookup"/>
-                    <Label Text="Version 1.0.5"/>
+                    <Label x:Name="AppVersionText"/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

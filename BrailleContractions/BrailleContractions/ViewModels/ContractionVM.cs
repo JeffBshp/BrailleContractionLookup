@@ -21,6 +21,11 @@ namespace BrailleContractions.ViewModels
         public string LongForm { get; }
 
         /// <summary>
+        /// The uncontracted form, but letters a-z are replaced with Braille characters.
+        /// </summary>
+        public string LongFormBraille { get; }
+
+        /// <summary>
         /// If <see cref="LongForm"/> describes a symbol ("dollar sign"), then this is the actual symbol ("$").
         /// Can be null.
         /// </summary>
@@ -34,18 +39,19 @@ namespace BrailleContractions.ViewModels
         /// <summary>
         /// The contracted form, but letters a-z are replaced with Braille characters.
         /// </summary>
-        public FormattedString AllBrailleShortForm { get; }
+        public FormattedString ShortFormBraille { get; }
 
         public string AutomationHelpText { get; }
 
-        public ContractionVM(Settings settings, string longForm, string symbol, FormattedString shortForm, FormattedString allBrailleShortForm)
+        public ContractionVM(Settings settings, string longForm, string longFormBraille, string symbol, FormattedString shortForm, FormattedString shortFormBraille)
         {
             Settings = settings;
             LongForm = longForm;
+            LongFormBraille = longFormBraille;
             Symbol = symbol;
             ShortForm = shortForm;
-            AllBrailleShortForm = allBrailleShortForm;
-            AutomationHelpText = string.Join(" ", allBrailleShortForm.ToString().Select(BrailleCharacterDescription));
+            ShortFormBraille = shortFormBraille;
+            AutomationHelpText = string.Join(" ", shortFormBraille.ToString().Select(BrailleCharacterDescription));
         }
 
         /// <summary>

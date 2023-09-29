@@ -8,6 +8,7 @@
         <StackLayout Orientation="Vertical" Spacing="0">
             <StackLayout Orientation="Horizontal" Spacing="0" Margin="5">
                 <Entry
+                    x:Name="SearchEntry"
                     AutomationProperties.IsInAccessibleTree="True"
                     AutomationProperties.Name="Search"
                     AutomationProperties.HelpText="Enter text here to filter the list of contractions at the bottom of this page."
@@ -21,7 +22,7 @@
                     AutomationProperties.Name="Backspace"
                     AutomationProperties.HelpText="Delete the last character in the Search box or reset one of the Braille cells below."
                     Clicked="ClickedBackspace"
-                    Image="baseline_keyboard_backspace_48"
+                    ImageSource="baseline_keyboard_backspace_48"
                     BackgroundColor="Transparent"
                     WidthRequest="40"
                     HeightRequest="40"
@@ -31,7 +32,7 @@
                     AutomationProperties.Name="Clear"
                     AutomationProperties.HelpText="Delete all text from the Search box or reset all of the Braille cells below."
                     Clicked="ClickedClear"
-                    Image="baseline_clear_48"
+                    ImageSource="baseline_clear_48"
                     BackgroundColor="Transparent"
                     WidthRequest="40"
                     HeightRequest="40"/>

@@ -34,6 +34,14 @@
     <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
   </style>
 
+  <style name="MainTheme.Splash" parent ="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowBackground">@drawable/splash_screen</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowFullscreen">true</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowActionBar">false</item>
+  </style>
+
   <color name="White">#FFFFFF</color>
   <color name="Primary">#F5F5F5</color>
   <color name="Highlight">#DDDDDD</color>

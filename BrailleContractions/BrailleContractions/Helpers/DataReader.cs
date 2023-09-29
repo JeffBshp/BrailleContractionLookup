@@ -1,15 +1,29 @@
 ﻿using BrailleContractions.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BrailleContractions.Helpers
 {
-    internal static class DataReader
+    public class DataReader
     {
+        /// <summary>
+        /// The platform dependent path to JBraille.ttf, my custom Braille font.
+        /// </summary>
         private static readonly string JBraille;
+
+        /// <summary>
+        /// Invoked when finished reading.
+        /// </summary>
+        private event Action<ContractionVM[]> OnReadComplete;
+
+        private readonly object _lock = new object();
+        private bool _done;
 
         /// <summary>
         /// Static constructor.
@@ -32,10 +46,55 @@ namespace BrailleContractions.Helpers
         }
 
         /// <summary>
+        /// All of the contractions parsed from the data file.
+        /// </summary>
+        private ContractionVM[] _data;
+
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="settings">Passed to each new contraction object.</param>
+        public DataReader(Settings settings)
+        {
+            Task.Run(() =>
+            {
+                _data = ReadUebContractions(settings).ToArray();
+
+                lock (_lock)
+                {
+                    OnReadComplete?.Invoke(_data);
+                    _done = true;
+                }
+            });
+        }
+
+        /// <summary>
+        /// Performs an action after this class is done reading the data.
+        /// If it's already done, the action is invoked immediately.
+        /// </summary>
+        /// <param name="whenDone">The action.</param>
+        public void WhenDone(Action<ContractionVM[]> whenDone)
+        {
+            lock (_lock)
+            {
+                if (_done)
+                {
+                    whenDone.Invoke(_data);
+                }
+                else
+                {
+                    OnReadComplete += whenDone;
+                }
+            }
+        }
+
+        /// <summary>
         /// Reads the UEB contraction data file.
         /// </summary>
+        /// <param name="settings">Passed to each new contraction object.</param>
         /// <returns>A list of contractions.</returns>
-        public static IEnumerable<ContractionVM> ReadUebContractions(Settings settings)
+        private static IEnumerable<ContractionVM> ReadUebContractions(Settings settings)
         {
             var letters = new Dictionary<char, char>();
             var assembly = Assembly.GetAssembly(typeof(App));
@@ -50,9 +109,10 @@ namespace BrailleContractions.Helpers
                     if (split.Length >= 2)
                     {
                         string longForm = split[0];
+                        var longFormBraille = new StringBuilder();
                         string symbol = null;
                         var shortForm = new FormattedString();
-                        var braille = new FormattedString();
+                        var shortFormBraille = new FormattedString();
 
                         // The first 26 entries should be letters. Add them to the dictionary as they appear.
                         if (letters.Count < 26 && longForm.Length > 0 && split[1].Length > 0)
@@ -60,8 +120,8 @@ namespace BrailleContractions.Helpers
                             letters.Add(longForm[0], split[1][0]);
                         }
 
-                        // For each character in the short (contracted) form
-                        foreach (char character in split[1])
+                        // For each character in the long (uncontracted) form
+                        foreach (char character in longForm)
                         {
                             // Replace letters a-z with Braille characters
                             if (!letters.TryGetValue(character, out char brailleChar))
@@ -70,9 +130,20 @@ namespace BrailleContractions.Helpers
                                 brailleChar = character;
                             }
 
+                            longFormBraille.Append(brailleChar);
+                        }
+
+                        // For each character in the short (contracted) form
+                        foreach (char character in split[1])
+                        {
+                            if (!letters.TryGetValue(character, out char brailleChar))
+                            {
+                                brailleChar = character;
+                            }
+
                             // Append to the regular and all-Braille short forms
                             AppendCharacter(shortForm, character);
-                            AppendCharacter(braille, brailleChar);
+                            AppendCharacter(shortFormBraille, brailleChar);
                         }
 
                         // If there is a third item on this line, it's a special symbol such as "$".
@@ -81,7 +152,7 @@ namespace BrailleContractions.Helpers
                             symbol = split[2];
                         }
 
-                        yield return new ContractionVM(settings, longForm, symbol, shortForm, braille);
+                        yield return new ContractionVM(settings, longForm, longFormBraille.ToString(), symbol, shortForm, shortFormBraille);
                     }
                 }
             }

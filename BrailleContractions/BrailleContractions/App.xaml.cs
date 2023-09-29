@@ -1,4 +1,5 @@
-﻿using BrailleContractions.ViewModels;
+﻿using BrailleContractions.Helpers;
+using BrailleContractions.ViewModels;
 using BrailleContractions.Views;
 using Xamarin.Forms;
 
@@ -10,7 +11,8 @@ namespace BrailleContractions
         {
             InitializeComponent();
             var settings = new Settings();
-            var lookupPage = new LookupPage(new LookupPageVM(settings));
+            var dataReader = new DataReader(settings);
+            var lookupPage = new LookupPage(new LookupPageVM(settings, dataReader));
             MainPage = new NavigationPage(lookupPage);
         }
     }

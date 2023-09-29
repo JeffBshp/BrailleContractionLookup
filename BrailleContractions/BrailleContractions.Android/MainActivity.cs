@@ -1,17 +1,20 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Xamarin.Forms.Platform.Android;
 
 namespace BrailleContractions.Droid
 {
-    [Activity(Label = "Braille Contractions", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    [Activity(
+        Label = "Braille Contractions",
+        Icon = "@drawable/icon",
+        Theme = "@style/MainTheme",
+        LaunchMode = LaunchMode.SingleTop,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
-            TabLayoutResource = Resource.Layout.Tabbar;
-            ToolbarResource = Resource.Layout.Toolbar;
-
             base.OnCreate(bundle);
 
             Xamarin.Forms.Forms.Init(this, bundle);

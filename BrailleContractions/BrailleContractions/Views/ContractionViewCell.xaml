@@ -38,7 +38,7 @@
                 HorizontalTextAlignment="End"/>
             <Label
                 AutomationProperties.IsInAccessibleTree="False"
-                FormattedText="{Binding AllBrailleShortForm}"
+                FormattedText="{Binding ShortFormBraille}"
                 IsVisible="{Binding Settings.DisplayShortFormInBraille}"
                 HorizontalTextAlignment="End"/>
         </StackLayout>

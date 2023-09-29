@@ -34,6 +34,11 @@ namespace BrailleContractions.Views
                     ContractionListView.ScrollTo(first, ScrollToPosition.Start, false);
                 }
             }
+            // HACK: the ViewModel is telling us to unfocus the Entry (to hide the soft keyboard)
+            else if (e.PropertyName == nameof(Entry.Unfocus))
+            {
+                SearchEntry.Unfocus();
+            }
         }
 
         /// <summary>
@@ -52,7 +57,7 @@ namespace BrailleContractions.Views
             const int usedHeight = 84;
             const int minRowsVisible = 3;
             const int minDotSize = 20;
-            const int maxDotSize = 36;
+            const int maxDotSize = 60;
 
             var viewModel = (LookupPageVM)BindingContext;
             int maxDotWidth = ((int)Width - usedWidth) / 8;

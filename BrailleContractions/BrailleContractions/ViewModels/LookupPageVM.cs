@@ -46,8 +46,7 @@ namespace BrailleContractions.ViewModels
             private set => SetProperty(ref _listIsRefreshing, value);
         }
 
-        private IReadOnlyList<ContractionVM> _allContractions = new List<ContractionVM>(0);
-
+        private ContractionVM[] _sourceData = null;
         private List<ContractionVM> _contractions = new List<ContractionVM>(0);
 
         /// <summary>
@@ -66,7 +65,7 @@ namespace BrailleContractions.ViewModels
         /// Constructor.
         /// </summary>
         /// <param name="settings">App settings.</param>
-        public LookupPageVM(Settings settings)
+        public LookupPageVM(Settings settings, DataReader dataReader)
         {
             Settings = settings;
 
@@ -84,11 +83,15 @@ namespace BrailleContractions.ViewModels
                 Cells[i].PropertyChanged += CellPropertyChanged;
             }
 
-            Task.Run(() =>
+            dataReader.WhenDone(data =>
             {
-                _allContractions = DataReader.ReadUebContractions(settings).ToList();
-                // Back to the main thread to update the UI, which also ends the initial refresh animation
-                Device.BeginInvokeOnMainThread(async () => await Update(Text, false, false));
+                _sourceData = data;
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    Contractions = data.ToList();
+                    ListIsRefreshing = false;
+                });
             });
         }
 
@@ -115,8 +118,7 @@ namespace BrailleContractions.ViewModels
         /// <param name="setCells">Whether to update <see cref="Cells"/> to match the new text.</param>
         public async Task Update(string newText, bool setText, bool setCells)
         {
-            // Do nothing when this flag is set; see below
-            if (!_ignoreChanges)
+            if (!_ignoreChanges && _sourceData != null)
             {
                 // Just a unique number that identifies this particular Update call; see below.
                 // No lock statement is used here because we know that this method only gets called on the main (UI) thread.
@@ -132,6 +134,9 @@ namespace BrailleContractions.ViewModels
                 if (setText)
                 {
                     Text = newText;
+
+                    // HACK: Tell the view to unfocus the Entry (to hide the soft keyboard in case it appeared when we changed the text)
+                    OnPropertyChanged(nameof(Entry.Unfocus));
                 }
                 if (setCells)
                 {
@@ -139,31 +144,32 @@ namespace BrailleContractions.ViewModels
                 }
                 _ignoreChanges = false;
 
-                // Only search if we have finished loading the data file
-                if (_allContractions.Count > 0)
+                // Run the search on another thread. The current thread can go handle other UI business while awaiting.
+                var result = await Task.Run(() =>
                 {
-                    // Run the search on another thread. The current thread can go handle other UI business while awaiting.
-                    var result = await Task.Run(() =>
-                    {
-                        string query = newText.Trim('\u2800');
+                    // Trim whitespace and any blank Braille characters
+                    string query = newText.ToLower().Trim().Trim('\u2800');
 
-                        var results = query.Length == 0
-                            ? _allContractions.AsEnumerable()
-                            : _allContractions.Where(x =>
-                                x.LongForm.Contains(query) ||
-                                (x.Symbol != null && x.Symbol.Contains(query)) ||
-                                x.ShortForm.ToString().Contains(query) ||
-                                x.AllBrailleShortForm.ToString().Contains(query));
+                    var results = query.Length == 0
+                        ? _sourceData.AsEnumerable()
+                        : _sourceData.Where(x =>
+                            (
+                                (x.LongForm.Contains(query) || x.LongFormBraille.Contains(query))
+                                // The first 10 entries contain parentheses in the long form and we don't want to match them
+                                && query != "(" && query != ")"
+                            ) ||
+                            (x.Symbol != null && x.Symbol.Contains(query)) ||
+                            x.ShortForm.ToString().Contains(query) ||
+                            x.ShortFormBraille.ToString().Contains(query));
 
-                        return new List<ContractionVM>(results);
-                    });
+                    return new List<ContractionVM>(results);
+                });
 
-                    // If the number has not changed, set the result and end the refresh
-                    if (_updateId == updateId)
-                    {
-                        Contractions = result;
-                        ListIsRefreshing = false;
-                    }
+                // If the number has not changed, set the result and end the refresh
+                if (_updateId == updateId)
+                {
+                    Contractions = result;
+                    ListIsRefreshing = false;
                 }
             }
         }

@@ -3,16 +3,9 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="BrailleContractions.Views.InfoPage">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="Label">
-                <Setter Property="FontSize" Value="Default"/>
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView Orientation="Vertical">
-            <StackLayout Orientation="Vertical" Margin="10">
+            <StackLayout Orientation="Vertical" Margin="10" Spacing="20">
                 <Label Text="This app is intended as a quick reference tool for people using or studying Unified English Braille (UEB). Please note that there are many rules for using Braille that are not covered here."/>
                 <Label Text="The main page displays a list of contractions. Enter text or tap the four Braille cells to search the list."/>
                 <Label Text="Tap anywhere on the list to toggle between alphabetical letters and Braille symbols."/>
@@ -48,8 +41,8 @@
                 <StackLayout Orientation="Vertical" Spacing="0">
                     <Label Text="Source code:"/>
                     <Label Text="https://github.com/JeffBshp/BrailleContractionLookup"/>
-                    <Label x:Name="AppVersionText"/>
                 </StackLayout>
+                <Label x:Name="AppVersionText"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

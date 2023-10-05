@@ -1,4 +1,5 @@
-﻿using BrailleContractions.ViewModels;
+﻿using BrailleContractions.Helpers;
+using BrailleContractions.ViewModels;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -15,9 +16,8 @@ namespace BrailleContractions.Views
             InitializeComponent();
             BindingContext = viewModel;
             Title = "Braille Contractions";
-            string appVersion = viewModel.Settings.SystemService.AppVersion;
             ToolbarItems.Add(new ToolbarItem("Info", "outline_info_48",
-                () => Navigation.PushAsync(new InfoPage(appVersion))));
+                () => Navigation.PushAsync(new InfoPage(viewModel.Settings.AppVersion))));
             SizeChanged += PageSizeChanged;
             viewModel.PropertyChanged += ViewModelPropertyChanged;
         }
@@ -52,17 +52,17 @@ namespace BrailleContractions.Views
         /// </summary>
         private void PageSizeChanged(object sender, EventArgs e)
         {
-            // Width reserved for margin/spacing between dots
-            const int usedWidth = 66;
-            // Height reserved for margin/spacing and the text box
-            const int usedHeight = 84;
+            // Leave room for this many ListView rows, or else hide the dots
             const int minRowsVisible = 3;
             const int minDotSize = 20;
             const int maxDotSize = 60;
 
             var viewModel = (LookupPageVM)BindingContext;
-            int maxDotWidth = ((int)Width - usedWidth) / 8;
-            int maxDotHeight = ((int)Height - usedHeight - (int)(viewModel.RowHeight * minRowsVisible)) / 3;
+            int listHeight = viewModel.RowHeight * minRowsVisible;
+            int usedHeight = Constants.ReservedHeight + viewModel.RowHeight + listHeight;
+
+            int maxDotWidth = ((int)Width - Constants.ReservedWidth) / 8;
+            int maxDotHeight = ((int)Height - usedHeight) / 3;
             int dotSize = Math.Min(maxDotSize, Math.Min(maxDotWidth, maxDotHeight));
 
             viewModel.CellsVisible = dotSize >= minDotSize;

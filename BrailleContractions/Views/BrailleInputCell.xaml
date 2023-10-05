@@ -3,11 +3,12 @@
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="clr-namespace:BrailleContractions.Views"
+    xmlns:h="clr-namespace:BrailleContractions.Helpers"
     x:Class="BrailleContractions.Views.BrailleInputCell">
     <ContentView.Resources>
         <ResourceDictionary>
             <Style TargetType="StackLayout">
-                <Setter Property="Spacing" Value="2"/>
+                <Setter Property="Spacing" Value="{x:Static h:Constants.DotSpacing}"/>
             </Style>
         </ResourceDictionary>
     </ContentView.Resources>

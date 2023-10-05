@@ -1,8 +1,8 @@
 ﻿using BrailleContractions.Helpers;
-using BrailleContractions.Services;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -10,32 +10,45 @@ namespace BrailleContractions.ViewModels
 {
     public class LookupPageVM : BaseVM
     {
-        private string _text = string.Empty;
-
+        /// <summary>
+        /// The user's search query.
+        /// </summary>
         public string Text
         {
             get => _text;
             set => SetProperty(ref _text, value);
         }
+        private string _text = string.Empty;
 
-        public BrailleInputCellVM[] Cells { get; } = new BrailleInputCellVM[4];
-
-        private bool _cellsVisible;
-
+        /// <summary>
+        /// True if the Braille input cells are visible.
+        /// </summary>
         public bool CellsVisible
         {
             get => _cellsVisible;
             set => SetProperty(ref _cellsVisible, value);
         }
-
-        public Settings Settings { get; }
+        private bool _cellsVisible;
 
         /// <summary>
         /// The RowHeight to set on the ListView.
         /// </summary>
-        public double RowHeight { get; }
+        public int RowHeight
+        {
+            get => _rowHeight;
+            set => SetProperty(ref _rowHeight, value);
+        }
+        private int _rowHeight;
 
-        private bool _listIsRefreshing = true;
+        /// <summary>
+        /// Height of the layout that contains the text entry.
+        /// </summary>
+        public int EntryContainerHeight
+        {
+            get => _entryContainerHeight;
+            set => SetProperty(ref _entryContainerHeight, value);
+        }
+        private int _entryContainerHeight;
 
         /// <summary>
         /// Toggles the refresh animation on the ListView.
@@ -43,11 +56,9 @@ namespace BrailleContractions.ViewModels
         public bool ListIsRefreshing
         {
             get => _listIsRefreshing;
-            private set => SetProperty(ref _listIsRefreshing, value);
+            set => SetProperty(ref _listIsRefreshing, value);
         }
-
-        private ContractionVM[] _sourceData = null;
-        private List<ContractionVM> _contractions = new List<ContractionVM>(0);
+        private bool _listIsRefreshing = false;
 
         /// <summary>
         /// Contractions that are currently visible in the ListView.
@@ -57,9 +68,22 @@ namespace BrailleContractions.ViewModels
             get => _contractions;
             private set => SetProperty(ref _contractions, value);
         }
+        private List<ContractionVM> _contractions = new List<ContractionVM>(0);
+        private ContractionVM[] _sourceData = null;
 
+        // For keeping track of searches / ListView updates
         private bool _ignoreChanges;
         private int _updateId;
+
+        /// <summary>
+        /// Reference to the global settings instance.
+        /// </summary>
+        public Settings Settings { get; }
+
+        /// <summary>
+        /// ViewModels of the cells with toggleable dots.
+        /// </summary>
+        public BrailleInputCellVM[] Cells { get; } = new BrailleInputCellVM[4];
 
         /// <summary>
         /// Constructor.
@@ -69,9 +93,9 @@ namespace BrailleContractions.ViewModels
         {
             Settings = settings;
 
-            // Adjust the row height to hopefully accommodate the device's font scale setting
-            RowHeight = (int)settings.SystemService.FontScale;
-
+            settings.PropertyChanged += SettingsPropertyChanged;
+            AdjustForFontScale();
+            
             // Construct the big Braille cells for user input
             for (int i = 0; i < Cells.Length; i++)
             {
@@ -80,16 +104,27 @@ namespace BrailleContractions.ViewModels
             }
 
             // Subscribe to the data reader and fill in the ListView when it's done
-            dataReader.WhenDone(data =>
+            dataReader.WhenDone(data => Device.BeginInvokeOnMainThread(() =>
             {
                 _sourceData = data;
+                Contractions = data.ToList();
+            }));
+        }
 
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    Contractions = data.ToList();
-                    ListIsRefreshing = false;
-                });
-            });
+        private void SettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ViewModels.Settings.FontScale) ||
+                e.PropertyName == nameof(ViewModels.Settings.FontSize))
+            {
+                AdjustForFontScale();
+            }
+        }
+
+        private void AdjustForFontScale()
+        {
+            // Adjust the row height to hopefully accommodate the device's font scale setting
+            RowHeight = (int)Settings.FontScale;
+            EntryContainerHeight = RowHeight + 12;
         }
 
         /// <summary>

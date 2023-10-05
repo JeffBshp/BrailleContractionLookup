@@ -10,10 +10,12 @@
 
   <ItemGroup>
     <None Remove="Resources\data.txt" />
+    <None Remove="Resources\JBraille.ttf" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\data.txt" />
+    <EmbeddedResource Include="Resources\JBraille.ttf" />
   </ItemGroup>
 
   <ItemGroup>

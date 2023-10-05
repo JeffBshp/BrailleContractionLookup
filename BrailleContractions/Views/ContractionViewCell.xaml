@@ -13,8 +13,6 @@
                     <Style TargetType="Label">
                         <Setter Property="MaxLines" Value="1"/>
                         <Setter Property="LineBreakMode" Value="TailTruncation"/>
-                        <Setter Property="TextColor" Value="Black"/>
-                        <Setter Property="FontSize" Value="Large"/>
                         <Setter Property="VerticalTextAlignment" Value="Center"/>
                         <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
                     </Style>
@@ -22,7 +20,8 @@
             </StackLayout.Resources>
             <Label
                 AutomationProperties.IsInAccessibleTree="False"
-                HorizontalTextAlignment="Start">
+                HorizontalTextAlignment="Start"
+                FontSize="{Binding Settings.FontSize}">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="{Binding LongForm}"/>
@@ -34,11 +33,13 @@
             <Label
                 AutomationProperties.IsInAccessibleTree="False"
                 FormattedText="{Binding ShortForm}"
+                FontSize="{Binding Settings.FontSize}"
                 IsVisible="{Binding Settings.DisplayShortFormInBraille, Converter={StaticResource Key=Negation}}"
                 HorizontalTextAlignment="End"/>
             <Label
                 AutomationProperties.IsInAccessibleTree="False"
                 FormattedText="{Binding ShortFormBraille}"
+                FontSize="{Binding Settings.FontSize}"
                 IsVisible="{Binding Settings.DisplayShortFormInBraille}"
                 HorizontalTextAlignment="End"/>
         </StackLayout>

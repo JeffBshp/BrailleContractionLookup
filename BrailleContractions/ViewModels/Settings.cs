@@ -1,8 +1,18 @@
-﻿using BrailleContractions.Services;
-using Xamarin.Forms;
-
-namespace BrailleContractions.ViewModels
+﻿namespace BrailleContractions.ViewModels
 {
+    /// <summary>
+    /// Platforms provide a global font scaling feature for accessibility.
+    /// The platform-specific values are converted to this enum, making them easier for this app to handle.
+    /// The integer values are used as the RowHeight of the ListView (see <see cref="LookupPageVM"/>).
+    /// </summary>
+    public enum FontScale
+    {
+        Small = 40,
+        Medium = 52,
+        Large = 64,
+        ExtraLarge = 76
+    }
+
     /// <summary>
     /// Contains global settings that views can bind to.
     /// A single instance should be created at startup and passed to objects that depend on settings.
@@ -10,11 +20,30 @@ namespace BrailleContractions.ViewModels
     public class Settings : BaseVM
     {
         /// <summary>
-        /// Gets the platform-specific implementation of <see cref="ISystemService"/>.
+        /// Platform-specific app version.
         /// </summary>
-        public ISystemService SystemService { get; } = DependencyService.Get<ISystemService>();
+        public virtual string AppVersion { get; }
 
-        private bool _displayShortFormInBraille;
+        /// <summary>
+        /// Represents the device's accessibility font scale setting.
+        /// The platform-specific value is converted to the <see cref="ViewModels.FontScale"/> enum.
+        /// </summary>
+        public FontScale FontScale
+        {
+            get => _fontScale;
+            set => SetProperty(ref _fontScale, value);
+        }
+        private FontScale _fontScale;
+
+        /// <summary>
+        /// Font size for Labels throughout the app.
+        /// </summary>
+        public double FontSize
+        {
+            get => _fontSize;
+            set => SetProperty(ref _fontSize, value);
+        }
+        private double _fontSize;
 
         /// <summary>
         /// If true, Braille characters are shown instead of letters a-z.
@@ -24,8 +53,7 @@ namespace BrailleContractions.ViewModels
             get => _displayShortFormInBraille;
             set => SetProperty(ref _displayShortFormInBraille, value);
         }
-
-        private int _dotSize;
+        private bool _displayShortFormInBraille;
 
         /// <summary>
         /// The size of the dots in the Braille input cells.
@@ -35,6 +63,14 @@ namespace BrailleContractions.ViewModels
         {
             get => _dotSize;
             set => SetProperty(ref _dotSize, value);
+        }
+        private int _dotSize;
+
+        public Settings(string appVersion, FontScale fontScale, double fontSize)
+        {
+            AppVersion = appVersion;
+            _fontScale = fontScale;
+            _fontSize = fontSize;
         }
     }
 }

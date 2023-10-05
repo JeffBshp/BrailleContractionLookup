@@ -13,37 +13,12 @@ namespace BrailleContractions.Helpers
     public class DataReader
     {
         /// <summary>
-        /// The platform dependent path to JBraille.ttf, my custom Braille font.
-        /// </summary>
-        private static readonly string JBraille;
-
-        /// <summary>
         /// Invoked when finished reading.
         /// </summary>
         private event Action<ContractionVM[]> OnReadComplete;
 
         private readonly object _lock = new object();
         private bool _done;
-
-        /// <summary>
-        /// Static constructor.
-        /// </summary>
-        static DataReader()
-        {
-            // Determine the path to the Braille font
-            switch (Device.RuntimePlatform)
-            {
-                case "Android":
-                    JBraille = "fonts/JBraille.ttf#JBraille";
-                    break;
-                case "iOS":
-                    // TODO
-                    goto default;
-                default:
-                    JBraille = string.Empty;
-                    break;
-            }
-        }
 
         /// <summary>
         /// All of the contractions parsed from the data file.
@@ -185,7 +160,7 @@ namespace BrailleContractions.Helpers
 
                 if (isNewCharBraille)
                 {
-                    span.FontFamily = JBraille;
+                    span.FontFamily = "JBraille";
                 }
 
                 formattedString.Spans.Add(span);

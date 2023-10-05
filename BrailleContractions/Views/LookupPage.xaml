@@ -3,19 +3,32 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="clr-namespace:BrailleContractions.Views"
+    xmlns:h="clr-namespace:BrailleContractions.Helpers"
     x:Class="BrailleContractions.Views.LookupPage">
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" Spacing="0">
-            <StackLayout Orientation="Horizontal" Spacing="0" Margin="5">
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{Binding EntryContainerHeight}"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackLayout
+                Grid.Row="0"
+                Orientation="Horizontal"
+                Spacing="0"
+                VerticalOptions="FillAndExpand"
+                Margin="{x:Static h:Constants.DefaultMargin}">
                 <Entry
                     x:Name="SearchEntry"
                     AutomationProperties.IsInAccessibleTree="True"
                     AutomationProperties.Name="Search"
                     AutomationProperties.HelpText="Enter text here to filter the list of contractions at the bottom of this page."
                     Text="{Binding Text}"
-                    FontFamily="{StaticResource JBraille}"
+                    FontSize="{Binding Settings.FontSize}"
+                    FontFamily="JBraille"
                     TextChanged="TextChanged"
                     Placeholder="Search"
+                    HeightRequest="{Binding RowHeight}"
                     HorizontalOptions="FillAndExpand"/>
                 <Button
                     AutomationProperties.IsInAccessibleTree="True"
@@ -24,8 +37,8 @@
                     Clicked="ClickedBackspace"
                     ImageSource="baseline_keyboard_backspace_48"
                     BackgroundColor="Transparent"
-                    WidthRequest="40"
-                    HeightRequest="40"
+                    WidthRequest="{Binding RowHeight}"
+                    HeightRequest="{Binding RowHeight}"
                     Margin="10,0"/>
                 <Button
                     AutomationProperties.IsInAccessibleTree="True"
@@ -34,34 +47,36 @@
                     Clicked="ClickedClear"
                     ImageSource="baseline_clear_48"
                     BackgroundColor="Transparent"
-                    WidthRequest="40"
-                    HeightRequest="40"/>
+                    WidthRequest="{Binding RowHeight}"
+                    HeightRequest="{Binding RowHeight}"/>
             </StackLayout>
             <StackLayout
+                Grid.Row="1"
                 Orientation="Horizontal"
-                Spacing="16"
+                Spacing="{x:Static h:Constants.InputCellSpacing}"
                 IsVisible="{Binding CellsVisible}"
                 HorizontalOptions="Center"
-                Margin="5,10">
+                Margin="{x:Static h:Constants.DefaultMargin}">
                 <v:BrailleInputCell BindingContext="{Binding Cells[0]}"/>
                 <v:BrailleInputCell BindingContext="{Binding Cells[1]}"/>
                 <v:BrailleInputCell BindingContext="{Binding Cells[2]}"/>
                 <v:BrailleInputCell BindingContext="{Binding Cells[3]}"/>
             </StackLayout>
             <ListView
+                Grid.Row="2"
                 x:Name="ContractionListView"
                 ItemsSource="{Binding Contractions}"
                 RowHeight="{Binding RowHeight}"
                 SelectionMode="None"
                 ItemTapped="ItemTapped"
                 IsRefreshing="{Binding ListIsRefreshing, Mode=OneWay}"
-                Margin="5">
+                Margin="{x:Static h:Constants.DefaultMargin}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <v:ContractionViewCell BindingContext="{Binding}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

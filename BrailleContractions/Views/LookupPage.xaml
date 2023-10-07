@@ -35,7 +35,7 @@
                     AutomationProperties.Name="Backspace"
                     AutomationProperties.HelpText="Delete the last character in the Search box or reset one of the Braille cells below."
                     Clicked="ClickedBackspace"
-                    ImageSource="baseline_keyboard_backspace_48"
+                    ImageSource="{Binding Settings.BackspaceIcon, Mode=OneTime}"
                     BackgroundColor="Transparent"
                     WidthRequest="{Binding RowHeight}"
                     HeightRequest="{Binding RowHeight}"
@@ -45,7 +45,7 @@
                     AutomationProperties.Name="Clear"
                     AutomationProperties.HelpText="Delete all text from the Search box or reset all of the Braille cells below."
                     Clicked="ClickedClear"
-                    ImageSource="baseline_clear_48"
+                    ImageSource="{Binding Settings.ClearIcon, Mode=OneTime}"
                     BackgroundColor="Transparent"
                     WidthRequest="{Binding RowHeight}"
                     HeightRequest="{Binding RowHeight}"/>

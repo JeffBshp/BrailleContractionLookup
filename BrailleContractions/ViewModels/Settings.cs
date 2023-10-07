@@ -17,12 +17,27 @@
     /// Contains global settings that views can bind to.
     /// A single instance should be created at startup and passed to objects that depend on settings.
     /// </summary>
-    public class Settings : BaseVM
+    public abstract class Settings : BaseVM
     {
         /// <summary>
         /// Platform-specific app version.
         /// </summary>
-        public virtual string AppVersion { get; }
+        public abstract string AppVersion { get; }
+
+        /// <summary>
+        /// Platform-specific image name for the backspace button icon.
+        /// </summary>
+        public abstract string BackspaceIcon { get; }
+
+        /// <summary>
+        /// Platform-specific image name for the clear button icon.
+        /// </summary>
+        public abstract string ClearIcon { get; }
+
+        /// <summary>
+        /// Platform-specific image name for the info button icon.
+        /// </summary>
+        public abstract string InfoIcon { get; }
 
         /// <summary>
         /// Represents the device's accessibility font scale setting.
@@ -65,12 +80,5 @@
             set => SetProperty(ref _dotSize, value);
         }
         private int _dotSize;
-
-        public Settings(string appVersion, FontScale fontScale, double fontSize)
-        {
-            AppVersion = appVersion;
-            _fontScale = fontScale;
-            _fontSize = fontSize;
-        }
     }
 }

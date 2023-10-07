@@ -1,0 +1,9 @@
+NOTICE: The files in this directory are subject to the Apache License version 2.0.
+The file named "Contents.json" has been modified by Visual Studio.
+The full license text is included in the root directory of the source code for this app at
+
+    https://github.com/JeffBshp/BrailleContractionLookup
+
+The files were obtained from
+
+    https://fonts.google.com/icons

@@ -74,6 +74,7 @@
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2612" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AndroidSettings.cs" />
     <Compile Include="DotRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -102,14 +103,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\baseline_keyboard_backspace_48.xml" />
+    <AndroidResource Include="Resources\drawable\outline_keyboard_backspace_24.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\outline_info_48.xml" />
+    <AndroidResource Include="Resources\drawable\outline_info_24.xml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\baseline_clear_48.xml" />
+    <AndroidResource Include="Resources\drawable\outline_clear_24.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\brl.png" />

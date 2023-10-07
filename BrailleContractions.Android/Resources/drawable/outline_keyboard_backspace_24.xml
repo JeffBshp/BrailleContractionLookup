@@ -1,0 +1,17 @@
+<!--
+  NOTICE: This file is subject to the Apache License version 2.0 and has been modified.
+  The full license text is included in the root directory of the source code for this app at
+    https://github.com/JeffBshp/BrailleContractionLookup
+  The original file was obtained from
+    https://fonts.google.com/icons
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:autoMirrored="true">
+  <path
+      android:fillColor="@android:color/black"
+      android:pathData="M21,11H6.83l3.58,-3.59L9,6l-6,6 6,6 1.41,-1.41L6.83,13H21v-2z"/>
+</vector>

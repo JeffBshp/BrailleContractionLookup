@@ -32,11 +32,11 @@
                 </Grid>
                 <StackLayout Orientation="Vertical" Spacing="0">
                     <Label Text="Braille data obtained from:"/>
-                    <Label Text="http://www.duxburysystems.org/braillechart.html"/>
+                    <Label Text="https://www.duxburysystems.com"/>
                 </StackLayout>
                 <StackLayout Orientation="Vertical" Spacing="0">
-                    <Label Text="Icons obtained from:"/>
-                    <Label Text="https://material.io/resources/icons"/>
+                    <Label Text="Button icons obtained from:"/>
+                    <Label Text="https://fonts.google.com/icons"/>
                 </StackLayout>
                 <StackLayout Orientation="Vertical" Spacing="0">
                     <Label Text="Source code:"/>

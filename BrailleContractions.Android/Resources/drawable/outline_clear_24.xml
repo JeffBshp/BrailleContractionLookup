@@ -1,5 +1,8 @@
 <!--
-  NOTICE: This file is subject to the Apache License version 2.0 and has been modified.
+  NOTICE: This file is subject to the Apache License version 2.0 and has been modified as follows:
+    - The width and height have been doubled.
+    - The tint has been removed.
+    - The fill color has been changed from white to black.
   The full license text is included in the root directory of the source code for this app at
     https://github.com/JeffBshp/BrailleContractionLookup
   The original file was obtained from

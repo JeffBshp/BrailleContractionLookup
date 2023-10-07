@@ -15,11 +15,24 @@ limitations under the License.
 -----
 
 Additional notice from developer:
+
 The Apache License 2.0 applies to the entire app,
-including the button icons obtained from
+excluding the libraries provided by Microsoft,
+and including the button icons obtained from
 
     https://fonts.google.com/icons
 
-The Android versions of those buttons have been modified, as noted
-within the drawable XML files. The files named "Contents.json" for iOS
-have been modified by Visual Studio, but the PNG files remain unchanged.
+Those are the backspace (<-), clear (X), and info (i) buttons.
+The Android versions have been modified as noted within the drawable
+XML files, which are located in
+
+    .\BrailleContractions.Android\Resources\drawable
+
+The files named "Contents.json" for iOS have been modified by Visual
+Studio, but the PNG files remain unchanged. They are located in
+
+    .\BrailleContractions.iOS\Assets.xcassets
+
+The .NET Standard Library, Xamarin.Forms, and Xamarin.Essentials
+are provided by Microsoft under the MIT license. A copy of that license
+as well as the Apache License 2.0 are included in this directory.

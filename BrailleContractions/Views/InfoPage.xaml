@@ -32,15 +32,19 @@
                 </Grid>
                 <StackLayout Orientation="Vertical" Spacing="0">
                     <Label Text="Braille data obtained from:"/>
-                    <Label Text="https://www.duxburysystems.com"/>
+                    <Label TextColor="#555" Text="https://www.duxburysystems.com"/>
                 </StackLayout>
                 <StackLayout Orientation="Vertical" Spacing="0">
                     <Label Text="Button icons obtained from:"/>
-                    <Label Text="https://fonts.google.com/icons"/>
+                    <Label TextColor="#555" Text="https://fonts.google.com/icons"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" Spacing="0">
+                    <Label Text="Copyright 2023 Jeff Bishop. Licensed under the Apache License, Version 2."/>
+                    <Label TextColor="#555" Text="https://apache.org/licenses/LICENSE-2.0"/>
                 </StackLayout>
                 <StackLayout Orientation="Vertical" Spacing="0">
                     <Label Text="Source code:"/>
-                    <Label Text="https://github.com/JeffBshp/BrailleContractionLookup"/>
+                    <Label TextColor="#555" Text="https://github.com/JeffBshp/BrailleContractionLookup"/>
                 </StackLayout>
                 <Label x:Name="AppVersionText"/>
             </StackLayout>

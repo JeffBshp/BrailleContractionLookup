@@ -33,6 +33,6 @@ Studio, but the PNG files remain unchanged. They are located in
 
     .\BrailleContractions.iOS\Assets.xcassets
 
-The .NET Standard Library, Xamarin.Forms, and Xamarin.Essentials
-are provided by Microsoft under the MIT license. A copy of that license
-as well as the Apache License 2.0 are included in this directory.
+The .NET Standard Library and Xamarin.Forms are provided by Microsoft
+under the MIT license. A copy of that license as well as the Apache
+License 2.0 are included in this directory.

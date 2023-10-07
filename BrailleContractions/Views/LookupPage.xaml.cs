@@ -15,11 +15,21 @@ namespace BrailleContractions.Views
         {
             InitializeComponent();
             BindingContext = viewModel;
+
             Title = "Braille Contractions";
             ToolbarItems.Add(new ToolbarItem("Info", viewModel.Settings.InfoIcon,
                 () => Navigation.PushAsync(new InfoPage(viewModel.Settings.AppVersion))));
+            
             SizeChanged += PageSizeChanged;
             viewModel.PropertyChanged += ViewModelPropertyChanged;
+
+            // List tends to run off the bottom of the screen on iOS, so add extra margin
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                var margin = new Thickness(Constants.DefaultMargin);
+                margin.Bottom += 20;
+                ContractionListView.Margin = margin;
+            }
         }
 
         private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -34,6 +44,11 @@ namespace BrailleContractions.Views
                 {
                     ContractionListView.ScrollTo(first, ScrollToPosition.Start, false);
                 }
+            }
+            // Row height changes when font scale changes, and affects available screen space
+            else if (e.PropertyName == nameof(LookupPageVM.RowHeight))
+            {
+                PageSizeChanged(null, null);
             }
             // HACK: the ViewModel is telling us to unfocus the Entry (to hide the soft keyboard)
             else if (e.PropertyName == nameof(Entry.Unfocus))

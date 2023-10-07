@@ -2,6 +2,13 @@
 {
     public static class Constants
     {
+        /// <summary>
+        /// Stroke width of the Braille dots will be set to satisfy this ratio.
+        /// Rather than hardcoding the number of pixels,
+        /// this makes the stroke width consistent regardless of pixel density.
+        /// </summary>
+        public const double DotDiameterToStrokeRatio = 12d;
+
         public const double DefaultMargin = 5;
         public const double DotSpacing = 2;
         public const double InputCellSpacing = 16;

@@ -16,19 +16,19 @@
         <StackLayout Orientation="Horizontal">
             <StackLayout Orientation="Vertical">
                 <v:Dot AutomationProperties.IsInAccessibleTree="True" AutomationProperties.Name="Dot 1"
-                    IsToggled="{Binding Dot1}" WidthRequest="{Binding Settings.DotSize}" HeightRequest="{Binding Settings.DotSize}"/>
+                    IsFilled="{Binding Dot1}" WidthRequest="{Binding Settings.DotSize}" HeightRequest="{Binding Settings.DotSize}"/>
                 <v:Dot AutomationProperties.IsInAccessibleTree="True" AutomationProperties.Name="Dot 2"
-                    IsToggled="{Binding Dot2}" WidthRequest="{Binding Settings.DotSize}" HeightRequest="{Binding Settings.DotSize}"/>
+                    IsFilled="{Binding Dot2}" WidthRequest="{Binding Settings.DotSize}" HeightRequest="{Binding Settings.DotSize}"/>
                 <v:Dot AutomationProperties.IsInAccessibleTree="True" AutomationProperties.Name="Dot 3"
-                    IsToggled="{Binding Dot3}" WidthRequest="{Binding Settings.DotSize}" HeightRequest="{Binding Settings.DotSize}"/>
+                    IsFilled="{Binding Dot3}" WidthRequest="{Binding Settings.DotSize}" HeightRequest="{Binding Settings.DotSize}"/>
             </StackLayout>
             <StackLayout Orientation="Vertical">
                 <v:Dot AutomationProperties.IsInAccessibleTree="True" AutomationProperties.Name="Dot 4"
-                    IsToggled="{Binding Dot4}" WidthRequest="{Binding Settings.DotSize}" HeightRequest="{Binding Settings.DotSize}"/>
+                    IsFilled="{Binding Dot4}" WidthRequest="{Binding Settings.DotSize}" HeightRequest="{Binding Settings.DotSize}"/>
                 <v:Dot AutomationProperties.IsInAccessibleTree="True" AutomationProperties.Name="Dot 5"
-                    IsToggled="{Binding Dot5}" WidthRequest="{Binding Settings.DotSize}" HeightRequest="{Binding Settings.DotSize}"/>
+                    IsFilled="{Binding Dot5}" WidthRequest="{Binding Settings.DotSize}" HeightRequest="{Binding Settings.DotSize}"/>
                 <v:Dot AutomationProperties.IsInAccessibleTree="True" AutomationProperties.Name="Dot 6"
-                    IsToggled="{Binding Dot6}" WidthRequest="{Binding Settings.DotSize}" HeightRequest="{Binding Settings.DotSize}"/>
+                    IsFilled="{Binding Dot6}" WidthRequest="{Binding Settings.DotSize}" HeightRequest="{Binding Settings.DotSize}"/>
             </StackLayout>
         </StackLayout>
     </ContentView.Content>
